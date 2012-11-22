@@ -596,7 +596,7 @@ if( $_shop_load_list !== false ) {
 	
 	$data = _dbQuery($sql);
 	
-	if( count($data) ) {
+	if( isset($data[0]) ) {
 	
 		$x = 0;
 		$entry = array();
