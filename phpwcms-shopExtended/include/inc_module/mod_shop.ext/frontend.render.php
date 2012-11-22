@@ -227,7 +227,13 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 			// addings with no options result in: prod id|0|0
 			$opt_1 = isset($_POST['prod_opt1']) ? intval($_POST['prod_opt1']) : 0;
 			$opt_2 = isset($_POST['prod_opt2']) ? intval($_POST['prod_opt2']) : 0;
-			if(isset($_POST['prod_opt1']) && isset($_POST['prod_opt2']) && $opt_1 && $opt_2) {
+			
+			// Test against product options
+			if(!isset($_POST['prod_opt1']) && !isset($_POST['prod_opt2']) {
+			
+				$shop_prod_cartadd = true;
+			
+			} elseif(isset($_POST['prod_opt1']) && isset($_POST['prod_opt2']) && $opt_1 && $opt_2) {
 				
 				$shop_prod_cartadd = true;
 				
