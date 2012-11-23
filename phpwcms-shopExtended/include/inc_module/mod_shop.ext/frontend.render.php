@@ -229,7 +229,7 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 			$opt_2 = isset($_POST['prod_opt2']) ? intval($_POST['prod_opt2']) : 0;
 			
 			// Test against product options
-			if(!isset($_POST['prod_opt1']) && !isset($_POST['prod_opt2']) {
+			if(!isset($_POST['prod_opt1']) && !isset($_POST['prod_opt2'])) {
 			
 				$shop_prod_cartadd = true;
 			
