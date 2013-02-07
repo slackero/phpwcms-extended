@@ -36,3 +36,11 @@ That little enhancement for phpwcms would not be possible without:
 
 - **[fancyBox](http://fancyapps.com/fancybox)** Copyright (c) 2012 Janis Skarnelis
 - **[TouchSwipe](http://labs.skinkers.com/touchSwipe)** Copyright (c) 2010 Matt Bryson
+
+### Changelog
+
+#### 7 Feb 2013
+- fancyBox v2.1.4
+- touchSwipe v1.6
+- changed position of fancyBox init scripts
+- little optimization
