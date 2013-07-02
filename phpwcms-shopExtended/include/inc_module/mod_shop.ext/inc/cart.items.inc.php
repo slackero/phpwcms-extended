@@ -33,11 +33,11 @@ foreach($cart_data as $item_key => $row) {
 	$row_shopprod_numbr = $row['shopprod_ordernumber']; //initial odernr
 
 	foreach($_SESSION[CART_KEY]['products'][$prod_id] as $item_key1 => $value_opt1) {
-		
+
 		$opt1_id = $item_key1;
 
 		foreach($_SESSION[CART_KEY]['products'][$prod_id][$opt1_id] as $item_key2 => $value_opt2) {
-			
+
 			$opt2_id = $item_key2;
 
 			//order options 1
@@ -47,10 +47,10 @@ foreach($cart_data as $item_key => $row) {
 			$value_opt1_float = 0;
 			$_cart_opt_1['data'] = explode(LF, $row['shopprod_size']);
 			foreach($_cart_opt_1['data'] as $key => $value){
-				
+
 				//values - followin rows
 				if($_SESSION[CART_KEY]['options1'][$prod_id][$opt1_id][$opt2_id] == $key && $key > 0){
-					
+
 					$_cart_opt_1['value'] = explode('|', trim($value));
 					// following is default for the exploded $caption
 					// [0] string: description
@@ -83,7 +83,7 @@ foreach($cart_data as $item_key => $row) {
 			foreach ($_cart_opt_2['data'] as $key => $value){
 				//values - followin rows
 				if ($_SESSION[CART_KEY]['options2'][$prod_id][$opt1_id][$opt2_id] == $key && $key > 0){
-					
+
 					$_cart_opt_2['value'] = explode('|', trim($value));
 					// following is default for the exploded $caption
 					// [0] string: description
@@ -114,7 +114,7 @@ foreach($cart_data as $item_key => $row) {
 			$row['shopprod_ordernumber'] = $row_shopprod_numbr.$opt1_numbr.$opt2_numbr;
 
 			$total[$prod_id]['quantity'] = $_SESSION[CART_KEY]['products'][$prod_id][$opt1_id][$opt2_id];
-			
+
 			//wr end changed 29.06.12
 
 			$total[$prod_id]['vat']			= $row['shopprod_vat'];
@@ -179,7 +179,7 @@ foreach($cart_data as $item_key => $row) {
 					$cart_items[$x] = str_replace('{COUNT}', '<input type="text" name="shop_prod_amount['.$prod_id.']['.$opt1_id.']['.$opt2_id.']" value="' . $total[$prod_id]['quantity'] . '" size="3" />', $cart_items[$x]);
 					//wr end changed 29.06.12
 					break;
-				
+
 				default:
 					$cart_items[$x] = str_replace('{COUNT}', $total[$prod_id]['quantity'], $cart_items[$x]);
 			}
@@ -193,32 +193,62 @@ foreach($cart_data as $item_key => $row) {
 }
 
 // set shipping fees
-$subtotal['shipping_net']	= 0;
-$subtotal['shipping_vat']	= 0;
-$subtotal['shipping_gross'] = 0;
-$subtotal['shipping_calc']	= false;
+$subtotal['shipping_net']		= 0;
+$subtotal['shipping_vat']		= 0;
+$subtotal['shipping_gross'] 	= 0;
+$subtotal['shipping_calc']		= false;
+$subtotal['shipping_calc_type']	= _getConfig( 'shop_pref_shipping_calc', '_shopPref' );
 
 foreach( _getConfig( 'shop_pref_shipping', '_shopPref' ) as $item_key => $row ) {
-	
-	// do nothing as long shipping fee = 0
-	if( $row['net'] == 0 ) {
-		continue;
-	}
-	
-	// lower weight and current shipping fee lower then this
-	if( $subtotal['weight'] <= $row['weight'] ) {
-	
-		$subtotal['shipping_calc'] = true;
-		
-	}
-	
-	if( $subtotal['shipping_calc'] ) {
-	
-		$subtotal['shipping_net']	= $row['net'];
-		$subtotal['shipping_gross']	= $subtotal['shipping_net'] * ( 1 + ($row['vat'] / 100) );
-		$subtotal['shipping_vat']	= $subtotal['shipping_gross'] - $subtotal['shipping_net'];
-		
-		break;
+
+	// calculate shipping costs based on weight
+	if(!$subtotal['shipping_calc_type']) {
+
+		// do nothing as long shipping fee = 0
+		if( $row['net'] == 0 ) {
+			continue;
+		}
+
+		// lower weight and current shipping fee lower then this
+		if( $subtotal['weight'] <= $row['weight'] ) {
+
+			$subtotal['shipping_calc'] = true;
+
+		}
+
+		if( $subtotal['shipping_calc'] ) {
+
+			$subtotal['shipping_net']	= $row['net'];
+			$subtotal['shipping_gross']	= $subtotal['shipping_net'] * ( 1 + ($row['vat'] / 100) );
+			$subtotal['shipping_vat']	= $subtotal['shipping_gross'] - $subtotal['shipping_net'];
+
+			break;
+		}
+
+	// calculate shipping costs based on total price
+	} else {
+
+		// do nothing as long shipping fee = 0
+		if( $row['price_net'] == 0 ) {
+			continue;
+		}
+
+		// when total net price is lower shipping barrier
+		if( $subtotal['net'] <= $row['price'] ) {
+
+			$subtotal['shipping_calc'] = true;
+
+		}
+
+		if( $subtotal['shipping_calc'] ) {
+
+			$subtotal['shipping_net']	= $row['price_net'];
+			$subtotal['shipping_gross']	= $subtotal['shipping_net'] * ( 1 + ($row['price_vat'] / 100) );
+			$subtotal['shipping_vat']	= $subtotal['shipping_gross'] - $subtotal['shipping_net'];
+
+			break;
+		}
+
 	}
 
 }

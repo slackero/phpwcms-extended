@@ -54,7 +54,7 @@ $BLM['shopprod_vat']			= 'Iva';
 $BLM['shopprod_tag']			= 'Tag (*,*)';
 
 $BLM['shopprod_weight']			= 'Peso';
-$BLM['shopprod_weight_max']		= 'massimale';
+$BLM['shopprod_weight_max']		= 'max.';
 $BLM['shopprod_units_weight']	= 'kg, oz, g';
 $BLM['shopprod_unit']			= 'Unit&agrave;';
 $BLM['shopprod_currency']		= 'Valuta';
