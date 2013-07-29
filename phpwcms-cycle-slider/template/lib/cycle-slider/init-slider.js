@@ -1,10 +1,19 @@
+/*! 
+ *  phpwcms Cycle Plugin
+ *  --------------------
+ *
+ *  Copyright (c) 2013 Oliver Georgi — oliver@phpwcms.de
+ *
+ */
 $(function(){
 
 	var $sliderSection = $('.cycle-slider-section');
 	if($sliderSection) {
 
 		var $sliderItems = $('.slider-item', $sliderSection);
-
+		
+		// Select first <img> Tag, catch image src and use it as CSS background image
+		// Then hide the <img> Tag
 		$sliderItems.each(function() {
 			var $item = $(this);
 			var $itemImage = $('img:first', $item);
@@ -15,14 +24,17 @@ $(function(){
 			}
 		});
 
-		// Cycle but only when more than 1 items
+		// Cycle but only when more than 1 item
 		if($sliderItems.length > 1) {
-
+			
+			// Add Prev/Next and Pagination (Dots)
 			$sliderSection
 				.append('<a id="slider-item-next" href="#" class="icon-chevron-sign-right icon-3x slider-nav">')
 				.append('<a id="slider-item-prev" href="#" class="icon-chevron-sign-left icon-3x slider-nav">')
 				.append('<div id="slider-pagination" class="slider-pagination">');
-
+			
+			// jQuery Cycle plugin options
+			// http://jquery.malsup.com/cycle/options.html
 			$sliderSection.cycle({
 				fx: 'scrollRight',
 				speed: 'slow',
