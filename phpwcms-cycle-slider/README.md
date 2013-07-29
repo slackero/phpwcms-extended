@@ -1,9 +1,13 @@
+![Sample picture phpwcms jQuery Cycle Plugin](https://raw.github.com/slackero/phpwcms-extended/master/phpwcms-cycle-slider/phpwcms-Cycle-Plugin.jpg)  
+<small>*Photo: Doreen Ritzau, [re:do](http://www.re-do.de/), © 2013*</small>
+
 phpwcms jQuery Cycle Plugin
 ===========================
 
 **phpwcms** jQuery Cycle Plugin is a flexible slider solution. jQuery Cycle Plugin is one of the best and most flexible jQuery Slider scripts.
 
-Copyright (c) 2013 Oliver Georgi — oliver@phpwcms.de
+Copyright © 2013 Oliver Georgi — oliver@phpwcms.de
+
 
 ### Installation
 
