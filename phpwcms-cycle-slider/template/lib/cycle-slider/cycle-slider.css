@@ -1,0 +1,82 @@
+/* 100% Cycle Slider */
+.cycle-slider-section {
+  position: relative;
+  height: 325px;
+  overflow: hidden;
+  border-bottom: 1px solid #c5c3c1;
+  -webkit-box-shadow: 0 1px 10px rgba(0,0,0,.1);
+  -moz-box-shadow: 0 1px 10px rgba(0,0,0,.1);
+  box-shadow: 0 1px 10px rgba(0,0,0,.1);
+  z-index: 4;
+}
+.cycle-slider-section .slider-item {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #53504e;
+  background-image: none;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 1;
+}
+.cycle-slider-section .slider-item a {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.cycle-slider-section .slider-item h3 {
+  position: absolute;
+  left: 1em;
+  bottom: 1em;
+  margin: 0;
+  padding: 8px;
+  line-height: 100%;
+  font-size: 1.5em;
+  color: #000000;
+  background-color: rgba(255, 255, 255, 0.85);
+}
+.cycle-slider-section .slider-nav {
+  position: absolute;
+  top: 45%;
+  color: #ffffff;
+  text-decoration: none;
+  z-index: 100;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+}
+.cycle-slider-section .slider-nav:hover {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.cycle-slider-section #slider-item-next {
+  right: .5em;
+}
+.cycle-slider-section #slider-item-prev {
+  left: .5em;
+}
+.cycle-slider-section .slider-pagination {
+  position: absolute;
+  bottom: 1.5em;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 100;
+}
+.cycle-slider-section .slider-pagination a {
+  position: relative;
+  display: inline-block;
+  color: #ffffff;
+  text-indent: -100em;
+  overflow: hidden;
+  width: 16px;
+  height: 16px;
+  margin: 0 3px;
+  background: transparent url(dots-white.png) no-repeat 0 0;
+}
+.cycle-slider-section .slider-pagination a.activeSlide,
+.cycle-slider-section .slider-pagination a:hover {
+  background-position: 0 -21px;
+}

@@ -1,0 +1,41 @@
+<!--IMAGE_SETTINGS_START//-->
+; this is formatted like WIN.INI
+; please: do not use comments for value lines
+; settings will overwrite CP settings
+width			= 1200
+;height			= 100
+col				= 99
+zoom			= 0
+crop			= 0
+space			= 0
+lightbox		= 0
+nocaption		= 0
+; 0 = no center, 1 = horizontal/vertical, 2 = horizontal, 3 = vertical
+center_image	= 0
+<!--IMAGE_SETTINGS_END//-->
+
+<!--IMAGES_HEADER_START//-->
+<!-- Copyright (c) 2013 Oliver Georgi — oliver@phpwcms.de -->
+[TITLE]<h3>{TITLE}</h3>[/TITLE]
+[SUBTITLE]<h4>{SUBTITLE}</h4>[/SUBTITLE]
+[TEXT]{TEXT}[/TEXT]
+<div class="cycle-slider-section">
+<!--IMAGES_HEADER_END//-->
+
+
+<!--IMAGES_ENTRY_START//-->
+	<div class="slider-item[FIRST] first[/FIRST]">
+		[LINK]{LINK}[/LINK]<img src="img/cmsimage.php/1200x0x0/{IMAGE_HASH}.{IMAGE_EXT}" alt="[ALT]{ALT}[/ALT][ALT_ELSE]{IMGNAME}[/ALT_ELSE]"[TITLE] title="{TITLE}"[/TITLE] />[LINK]</a>[/LINK][TITLE]
+		<h3>{TITLE}</h3>[/TITLE][CAPTION]
+		<!--<p>{CAPTION}</p>-->[/CAPTION]
+	</div>
+<!--IMAGES_ENTRY_END//-->
+
+<!--IMAGES_ENTRY_SPACER_START//--><!--IMAGES_ENTRY_SPACER_END//-->
+<!--IMAGES_ROW_SPACER_START//--><!--IMAGES_ROW_SPACER_END//-->
+
+<!--IMAGES_FOOTER_START//-->
+</div>
+<!-- CSS: {TEMPLATE}lib/font-awesome/css/font-awesome.min.css --><!-- CSS: {TEMPLATE}lib/cycle-slider/cycle-slider.css -->
+<!-- JS: {TEMPLATE}lib/cycle-slider/jquery.cycle.all.min.js --><!-- JS: easing.min --><!-- JS: {TEMPLATE}lib/cycle-slider/init-slider.js -->
+<!--IMAGES_FOOTER_END//-->
