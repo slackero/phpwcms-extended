@@ -9,8 +9,8 @@ $(function(){
 	
 	var $sliderOptions = {
 		autoSizeImage: true, // if false the Slider Item will be used as is
-		enablePrevNext: true,
-		enablePagination: true,
+		enablePrevNext: true, // enable prev/next elements
+		enablePagination: true, // show pagination
 		
 		// jQuery Cycle plugin options
 		// http://jquery.malsup.com/cycle/options.html
