@@ -55,8 +55,8 @@ $(function(){
 			// Add Prev/Next and Pagination (Dots)
 			if($sliderOptions.enablePrevNext) {
 				$sliderSection
-					.append('<a id="slider-item-next" href="#" class="icon-chevron-sign-right icon-3x slider-nav">')
-					.append('<a id="slider-item-prev" href="#" class="icon-chevron-sign-left icon-3x slider-nav">');
+					.append('<a id="slider-item-next" href="#" class="slider-nav"></a>')
+					.append('<a id="slider-item-prev" href="#" class="slider-nav"></a>');
 				
 				$sliderOptions.cycleOptions.next = '#slider-item-next';
 				$sliderOptions.cycleOptions.prev = '#slider-item-prev';
