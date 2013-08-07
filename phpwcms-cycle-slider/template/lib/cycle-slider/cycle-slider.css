@@ -49,18 +49,18 @@
   z-index: 100;
    background: transparent url(arrow-white.png) no-repeat 0 0;
 }
-.cycle-slider-section #slider-item-next {
+.cycle-slider-section .slider-item-next {
   right: 1em;
   background-position: -300px 0;
 }
-.cycle-slider-section #slider-item-next:hover {
+.cycle-slider-section a.slider-item-next:hover {
   background-position: -100px 0;
 }
-.cycle-slider-section #slider-item-prev {
+.cycle-slider-section .slider-item-prev {
   left: 1em;
   background-position: -200px 0;
 }
-.cycle-slider-section #slider-item-prev:hover {
+.cycle-slider-section a.slider-item-prev:hover {
   background-position: 0 0;
 }
 .cycle-slider-section .slider-pagination {
