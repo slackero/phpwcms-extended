@@ -47,7 +47,10 @@
   color: #ffffff;
   text-decoration: none;
   z-index: 100;
-   background: transparent url(arrow-white.png) no-repeat 0 0;
+  background: transparent url(sprites-white.png) no-repeat 0 0;
+}
+.cycle-slider-section.cycle-slider-section-grey .slider-nav {
+  background-image: url(sprites-grey.png);
 }
 .cycle-slider-section .slider-item-next {
   right: 1em;
@@ -80,9 +83,12 @@
   width: 16px;
   height: 16px;
   margin: 0 3px;
-  background: transparent url(dots-white.png) no-repeat 0 0;
+  background: transparent url(sprites-white.png) no-repeat -400px -21px;
+}
+.cycle-slider-section.cycle-slider-section-grey .slider-pagination a {
+  background-image: url(sprites-grey.png);
 }
 .cycle-slider-section .slider-pagination a.activeSlide,
 .cycle-slider-section .slider-pagination a:hover {
-  background-position: 0 -21px;
+  background-position: -400px 0;
 }
