@@ -11,7 +11,9 @@ $(function(){
 		autoSizeImage: true, // if false the Slider Item will be used as is
 		enablePrevNext: true, // enable prev/next elements
 		enablePagination: true, // show pagination
-		
+		paginateMode: 'default', // default: 1,2,3 | thumbnail
+		wrapSliderSection: false, // false or true, wrapped by <div class="cycle-slider-wrapper">
+				
 		// jQuery Cycle plugin options
 		// http://jquery.malsup.com/cycle/options.html
 		cycleOptions: {
@@ -29,44 +31,85 @@ $(function(){
 	
 	var $sliderSection = $('.cycle-slider-section');
 	
-	if($sliderSection) {
-
-		var $sliderItems = $('.slider-item', $sliderSection);
+	if($sliderSection.length > 0) {
 		
-		if($sliderOptions.autoSizeImage) {
+		$sliderSection.each(function(index) {
 			
-			// Select first <img> Tag, catch image src and use it as CSS background image
-			// Then hide the <img> Tag
+			var $sliderIndex		= index;
+			var $thisSlider			= $(this);
+			var $sliderItems		= $('.slider-item', $thisSlider);
+			var $thisSliderOptions	= $sliderOptions;
+			var $dataOptions		= $thisSlider.data('options');
+			var $thumbnails			= [];
+		
+			if($.type($dataOptions) === 'object') {
+				$.extend($thisSliderOptions, $dataOptions);	
+			}
+		
+			if($thisSliderOptions.autoSizeImage || $thisSliderOptions.paginateMode == 'thumbnail') {
 			
-			$sliderItems.each(function() {
-				var $item = $(this);
-				var $itemImage = $('img:first', $item);
-				var $itemImageSrc = $itemImage.attr('src');
-				if($itemImageSrc) {
-					$item.css('background-image', 'url(' + $itemImageSrc + ')');
-					$itemImage.hide();
-				}
-			});
-		}
+				// Select first <img> Tag, catch image src and use it as CSS background image
+				// Then hide the <img> Tag	
+				$sliderItems.each(function() {
+					var $item			= $(this);
+					var $itemImage		= $('img:first', $item);
+					var $itemImageSrc	= $itemImage.attr('src');
+					if($thisSliderOptions.autoSizeImage && $itemImageSrc) {
+						$item.css('background-image', 'url(' + $itemImageSrc + ')');
+						$itemImage.hide();
+					}
+					// Choose pagination thumbnail
+					if($thisSliderOptions.paginateMode == 'thumbnail') {
+						// check for thumbnail src info
+						var $itemImageThumbnail = $itemImage.data('thumbnail');
+						if($.type($itemImageThumbnail) == 'string') {
+							$thumbnails.push($itemImageThumbnail);
+						} else if($itemImageSrc) {
+							$thumbnails.push($itemImageSrc);
+						} else {
+							$thumbnails.push('');
+						}
+					}
+				});
+			}
 
-		// Cycle but only when more than 1 item
-		if($sliderItems.length > 1) {
+			// Cycle but only when more than 1 item
+			if($sliderItems.length > 1) {
 			
-			// Add Prev/Next and Pagination (Dots)
-			if($sliderOptions.enablePrevNext) {
-				$sliderSection
-					.append('<a id="slider-item-next" href="#" class="slider-nav slider-item-next"></a>')
-					.append('<a id="slider-item-prev" href="#" class="slider-nav slider-item-prev"></a>');
+				// Add Prev/Next and Pagination (Dots)
+				if($thisSliderOptions.enablePrevNext) {
+					$thisSlider
+						.append('<a id="slider-item-next" href="#" class="slider-nav slider-item-next"></a>')
+						.append('<a id="slider-item-prev" href="#" class="slider-nav slider-item-prev"></a>');
 				
-				$sliderOptions.cycleOptions.next = '#slider-item-next';
-				$sliderOptions.cycleOptions.prev = '#slider-item-prev';
-			}
-			if($sliderOptions.enablePagination) {
-				$sliderSection.append('<div id="slider-pagination" class="slider-pagination">');
-				$sliderOptions.cycleOptions.pager = '#slider-pagination';
+					$thisSliderOptions.cycleOptions.next = '#slider-item-next';
+					$thisSliderOptions.cycleOptions.prev = '#slider-item-prev';
+				}
+				if($thisSliderOptions.enablePagination) {
+					$thisSliderOptions.cycleOptions.pager = '#slider-pagination-'+$sliderIndex;
+					if($thisSliderOptions.paginateMode == 'thumbnail') {
+						$thisSlider.after('<ul id="slider-pagination-'+$sliderIndex+'" class="slider-pagination-thumbnails">');
+						$thisSliderOptions.cycleOptions.pagerAnchorBuilder = function(idx, slide) {
+							var thumbnailSrc = $.type($thumbnails[idx]) == 'string' && $thumbnails[idx] ? $thumbnails[idx] : '';
+							if(thumbnailSrc) {
+								return '<li><a href="#" style="background-image:url('+thumbnailSrc+');"><img src="'+thumbnailSrc+'" alt="thumb'+(idx+1)+'" /></a></li>';
+							} else {
+								return '<li><a href="#"><span>'+(idx+1)+'</span></a></li>';
+							}
+						}
+					} else {
+						$thisSlider.append('<div id="slider-pagination-'+$sliderIndex+'" class="slider-pagination">');
+					}
+				}
+				
+				if($thisSliderOptions.wrapSliderSection) {
+					$thisSlider.wrap('<div class="cycle-slider-wrapper">');
+				}
+				
+				$thisSlider.cycle($thisSliderOptions.cycleOptions);
+
 			}
 			
-			$sliderSection.cycle($sliderOptions.cycleOptions);
-		}
+		});
 	}
 });

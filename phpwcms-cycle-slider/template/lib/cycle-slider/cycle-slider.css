@@ -1,4 +1,9 @@
 /* 100% Cycle Slider */
+.cycle-slider-wrapper {
+	position: relative;
+	clear: both;
+}
+
 .cycle-slider-section {
   position: relative;
   height: 325px;
@@ -91,4 +96,32 @@
 .cycle-slider-section .slider-pagination a.activeSlide,
 .cycle-slider-section .slider-pagination a:hover {
   background-position: -400px 0;
+}
+
+.slider-pagination-thumbnails {
+	position: relative;
+	margin: 10px 0 0 0;
+	padding: 0;
+	list-style: none;
+}
+.slider-pagination-thumbnails li {
+	position: relative;
+	display: inline-block;
+	padding: 0;
+	margin: 0 10px 0 0;
+	list-style: none;
+}
+.slider-pagination-thumbnails li a {
+	position: relative;
+	display: block;
+	width: 50px;
+	height: 50px;
+	overflow: hidden;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: #ccc;
+	border: 1px solid #999;
+}
+.slider-pagination-thumbnails li a img {
+	display: none;
 }
