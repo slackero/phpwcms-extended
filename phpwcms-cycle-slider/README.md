@@ -27,11 +27,11 @@ It is also possible to set all options using the HTML5 data attribute with JSON 
 
  Option            | Value                     | Description                        
 -------------------|---------------------------|-----------------------------------------------------------
- autoSizeImage     | bool: false\|true          | `true` will catch first img src and use as background-image
- enablePrevNext    | bool: false\|true          | enable or disable prev/next pagination
- enablePagination  | bool: false\|true          | enable or disable single item pagination
- paginateMode      | string: default\|thumbnail | `default` will use 1/2/3 while `thumbnail` will use first image thumbnail as paginate item, thumbnail can be defined by `data-thumbnail` attribute within the first image (see example)
- wrapSliderSection | bool: false\|true          | `true` will wrap slider section by additional \<div>
+ autoSizeImage     | bool: false/true          | `true` will catch first img src and use as background-image
+ enablePrevNext    | bool: false/true          | enable or disable prev/next pagination
+ enablePagination  | bool: false/true          | enable or disable single item pagination
+ paginateMode      | string: default/thumbnail | `default` will use 1/2/3 while `thumbnail` will use first image thumbnail as paginate item, thumbnail can be defined by `data-thumbnail` attribute within the first image (see example)
+ wrapSliderSection | bool: false/true          | `true` will wrap slider section by additional \<div>
 
 
 ### Usage
