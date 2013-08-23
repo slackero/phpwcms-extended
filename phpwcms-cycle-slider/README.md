@@ -32,6 +32,8 @@ It is also possible to set all options using the HTML5 data attribute with JSON 
  enablePagination  | bool: false/true          | enable or disable single item pagination
  paginateMode      | string: default/thumbnail | `default` will use 1/2/3 while `thumbnail` will use first image thumbnail as paginate item, thumbnail can be defined by `data-thumbnail` attribute within the first image (see example)
  wrapSliderSection | bool: false/true          | `true` will wrap slider section by additional \<div>
+ cycleEffect       | string: scrollLeft…       | see fx at [Cycle Plugin options](http://jquery.malsup.com/cycle/options.html)
+ cycleSpeed        | string: fast,slow…        | see speed at [Cycle Plugin options](http://jquery.malsup.com/cycle/options.html)
 
 
 ### Usage

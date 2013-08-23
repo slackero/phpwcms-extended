@@ -13,6 +13,8 @@ $(function(){
 		enablePagination: true, // show pagination
 		paginateMode: 'default', // default: 1,2,3 | thumbnail
 		wrapSliderSection: false, // false or true, wrapped by <div class="cycle-slider-wrapper">
+		cycleEffect: 'scrollRight', // Cycle Effect
+		cycleSpeed: 'slow', // Cycle Speed
 				
 		// jQuery Cycle plugin options
 		// http://jquery.malsup.com/cycle/options.html
@@ -75,6 +77,9 @@ $(function(){
 
 			// Cycle but only when more than 1 item
 			if($sliderItems.length > 1) {
+				
+				$thisSliderOptions.cycleOptions.fx = $thisSliderOptions.cycleEffect;
+				$thisSliderOptions.cycleOptions.speed = $thisSliderOptions.cycleSpeed;
 			
 				// Add Prev/Next and Pagination (Dots)
 				if($thisSliderOptions.enablePrevNext) {
