@@ -80,6 +80,10 @@ $(function(){
 				
 				$thisSliderOptions.cycleOptions.fx = $thisSliderOptions.cycleEffect;
 				$thisSliderOptions.cycleOptions.speed = $thisSliderOptions.cycleSpeed;
+				
+				if($thisSliderOptions.wrapSliderSection) {
+					$thisSlider.wrap('<div class="cycle-slider-wrapper">');
+				}
 			
 				// Add Prev/Next and Pagination (Dots)
 				if($thisSliderOptions.enablePrevNext) {
@@ -105,10 +109,6 @@ $(function(){
 					} else {
 						$thisSlider.append('<div id="slider-pagination-'+$sliderIndex+'" class="slider-pagination">');
 					}
-				}
-				
-				if($thisSliderOptions.wrapSliderSection) {
-					$thisSlider.wrap('<div class="cycle-slider-wrapper">');
 				}
 				
 				$thisSlider.cycle($thisSliderOptions.cycleOptions);
