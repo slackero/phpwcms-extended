@@ -60,12 +60,21 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 	if($_tmpl['source']) {
 
 		$_tmpl['config'] = parse_ini_str(get_tmpl_section('CONFIG', $_tmpl['source']), false);
+		
+		// Uncomment if CMS is released before 2013-10-01
+		/*
+		if(!function_exists('phpwcms_boolval')) {
+			function phpwcms_boolval(&$BOOL, &$STRICT=false) {
+				return boolval($BOOL, $STRICT);
+			}
+		}
+		*/
 
-		$_tmpl['config']['cat_list_products']		= empty($_tmpl['config']['cat_list_products']) ? false : boolval($_tmpl['config']['cat_list_products']);
-		$_tmpl['config']['image_list_lightbox']		= empty($_tmpl['config']['image_list_lightbox']) ? false : boolval($_tmpl['config']['image_list_lightbox']);
-		$_tmpl['config']['image_detail_lightbox']	= empty($_tmpl['config']['image_detail_lightbox']) ? false : boolval($_tmpl['config']['image_detail_lightbox']);
-		$_tmpl['config']['image_detail_crop']		= empty($_tmpl['config']['image_detail_crop']) ? false : boolval($_tmpl['config']['image_detail_crop']);
-		$_tmpl['config']['image_list_crop']			= empty($_tmpl['config']['image_list_crop']) ? false : boolval($_tmpl['config']['image_list_crop']);
+		$_tmpl['config']['cat_list_products']		= empty($_tmpl['config']['cat_list_products']) ? false : phpwcms_boolval($_tmpl['config']['cat_list_products']);
+		$_tmpl['config']['image_list_lightbox']		= empty($_tmpl['config']['image_list_lightbox']) ? false : phpwcms_boolval($_tmpl['config']['image_list_lightbox']);
+		$_tmpl['config']['image_detail_lightbox']	= empty($_tmpl['config']['image_detail_lightbox']) ? false : phpwcms_boolval($_tmpl['config']['image_detail_lightbox']);
+		$_tmpl['config']['image_detail_crop']		= empty($_tmpl['config']['image_detail_crop']) ? false : phpwcms_boolval($_tmpl['config']['image_detail_crop']);
+		$_tmpl['config']['image_list_crop']			= empty($_tmpl['config']['image_list_crop']) ? false : phpwcms_boolval($_tmpl['config']['image_list_crop']);
 
 		// handle custom fields
 		$_tmpl['config']['shop_field'] = array();
