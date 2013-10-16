@@ -3,7 +3,7 @@
  * phpwcms content management system
  *
  * @author Oliver Georgi <oliver@phpwcms.de>
- * @copyright Copyright (c) 2002-2012, Oliver Georgi
+ * @copyright Copyright (c) 2002-2013, Oliver Georgi
  * @license http://opensource.org/licenses/GPL-2.0 GNU GPL-2
  * @link http://www.phpwcms.de
  *
@@ -30,9 +30,9 @@ class ModuleShopSearch {
 		$shop_url			= _getConfig( 'shop_pref_id_shop', '_shopPref' );
 		$shop_lang_support	= _getConfig( 'shop_pref_felang' ) ? true : false;
 		
-		if(!is_numeric($shop_url) && is_string($shop_url)) {
+		if(!is_intval($shop_url) && is_string($shop_url)) {
 			$shop_url	= trim($shop_url);
-		} elseif(is_numeric($shop_url) && intval($shop_url)) {
+		} elseif(is_intval($shop_url) && intval($shop_url)) {
 			$shop_url	= 'aid='.intval($shop_url);
 		} else {
 			$shop_url	= $GLOBALS['aktion'][1] ? 'aid='.$GLOBALS['aktion'][1] : 'id='.$GLOBALS['aktion'][0];

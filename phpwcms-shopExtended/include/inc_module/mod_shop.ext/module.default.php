@@ -3,7 +3,7 @@
  * phpwcms content management system
  *
  * @author Oliver Georgi <oliver@phpwcms.de>
- * @copyright Copyright (c) 2002-2012, Oliver Georgi
+ * @copyright Copyright (c) 2002-2013, Oliver Georgi
  * @license http://opensource.org/licenses/GPL-2.0 GNU GPL-2
  * @link http://www.phpwcms.de
  *
@@ -26,5 +26,6 @@ $_module_contentpart	= true;
 $_module_fe_render		= true;
 $_module_fe_init		= false;
 $_module_fe_search		= true;
+$_module_fe_setting		= false;
 
 ?>
