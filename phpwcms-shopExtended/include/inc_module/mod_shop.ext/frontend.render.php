@@ -186,8 +186,12 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 		_getConfig( $value, '_shopPref' );
 	}
 
-	$_tmpl['config']['shop_url'] = _getConfig( 'shop_pref_id_shop', '_shopPref' );
-	$_tmpl['config']['cart_url'] = _getConfig( 'shop_pref_id_cart', '_shopPref' );
+	if(!isset($_tmpl['config']['shop_url'])) {
+		$_tmpl['config']['shop_url'] = _getConfig( 'shop_pref_id_shop', '_shopPref' );
+	}
+	if(!isset($_tmpl['config']['cart_url'])) {
+		$_tmpl['config']['cart_url'] = _getConfig( 'shop_pref_id_cart', '_shopPref' );
+	}
 
 	if(!is_intval($_tmpl['config']['shop_url']) && is_string($_tmpl['config']['shop_url'])) {
 		$_tmpl['config']['shop_url']	= trim($_tmpl['config']['shop_url']);
@@ -845,6 +849,35 @@ if( $_shop_load_list !== false ) {
 
 				// Files
 				$_prod_list_files = isset($row['shopprod_var']['files'][0]['f_id']) ? shop_files($row['shopprod_var']['files']) : '';
+
+				if(!empty($row['shopprod_overwrite_meta'])) {
+					if($row['shopprod_name1']) {
+						$content["pagetitle"] = setPageTitle($content["pagetitle"], $article['cat'], $row['shopprod_name1']);
+						set_meta('og:title', $row['shopprod_name1'], 'property');
+					}
+					if($row['shopprod_description0']) {
+						$row['meta_description'] = $row['shopprod_description0'];
+					} elseif($row['shopprod_description1']) {
+						$row['meta_description'] = $row['shopprod_description1'];
+					} else {
+						$row['meta_description'] = '';
+					}
+					if($row['meta_description']) {
+						$row['meta_description'] = trim( strip_tags( strip_bbcode($row['meta_description']) ) );
+						$row['meta_description'] = getCleanSubString($row['meta_description'], 40, '', 'word');
+						set_meta('description', $row['meta_description']);
+						set_meta('og:description', $row['meta_description'], 'property');
+					}
+
+					set_meta('og:type', 'og:product', 'property');
+					set_meta('og:url', abs_url(array('shop_detail'=>$shop_detail_id), array('shop_cat', 'shop_cart')),'property');
+
+					if(count($_prod_list_img)) {
+						set_meta('og:image', PHPWCMS_URL.'img/cmsimage.php/600x600x1/'.$row['shopprod_var']['images'][0]['f_hash'] . '.' . $row['shopprod_var']['images'][0]['f_ext'], 'property');
+						$block['custom_htmlhead']['image_src'] = '  <link rel="image_src" href="'.PHPWCMS_URL.'img/cmsimage.php/600x600x1/'.$row['shopprod_var']['images'][0]['f_hash'] . '.' . $row['shopprod_var']['images'][0]['f_ext'].'" />';
+					}
+
+				}
 
 				// Update product view count
 				// ToDo: Maybe use cookie or session to avoid tracking in case showed once

@@ -125,5 +125,6 @@ $BLM['shopprod_loworder_charge']	= 'surcharge';
 $BLM['shopprod_discount']			= 'Discount';
 
 $BLM['shopprod_lang_support']	= 'Frontend language support';
+$BLM['shopprod_overwrite_meta']	= 'Product detail overwrites metadata';
 
 ?>

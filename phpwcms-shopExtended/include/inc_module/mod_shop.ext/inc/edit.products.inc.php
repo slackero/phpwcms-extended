@@ -22,6 +22,9 @@ $BE['HEADER']['optionselect.js']		= getJavaScriptSourceLink('include/inc_js/opti
 if(!isset($plugin['data']['shopprod_duplicate'])) {
 	$plugin['data']['shopprod_duplicate'] = 0;
 }
+if(!isset($plugin['data']['shopprod_overwrite_meta'])) {
+	$plugin['data']['shopprod_overwrite_meta'] = 1;
+}
 
 
 ?>
@@ -507,6 +510,11 @@ if(count($plugin['data']['shopprod_files'])) {
 				<td><input type="checkbox" name="shopprod_listall" id="shopprod_listall" value="1"<?php is_checked($plugin['data']['shopprod_listall'], 1) ?> /></td>
 				<td><label for="shopprod_listall"><?php echo $BLM['shopprod_listall'] ?></label></td>
 			</tr>
+			<tr>
+				<td><input type="checkbox" name="shopprod_overwrite_meta" id="shopprod_overwrite_meta" value="1"<?php is_checked($plugin['data']['shopprod_overwrite_meta'], 1) ?> /></td>
+				<td colspan="3"><label for="shopprod_overwrite_meta"><?php echo $BLM['shopprod_overwrite_meta'] ?></label></td>
+			</tr>
+
 <!-- save as duplicate -->
 <?php	if($plugin['data']['shopprod_id']):	?>
 			<tr>
