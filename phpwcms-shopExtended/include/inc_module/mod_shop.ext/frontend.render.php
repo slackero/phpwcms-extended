@@ -220,7 +220,7 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 	}
 
 	if($_tmpl['config']['shop_css']) {
-		renderHeadCSS(array(1=>$_tmpl['config']['shop_css']));
+		renderHeadCSS($_tmpl['config']['shop_css']);
 	}
 
 	// OK get cart post data
@@ -228,6 +228,7 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 
 		$shop_prod_id		= abs(intval($_POST['shop_prod_id']));
 		$shop_prod_amount	= abs(intval($_POST['shop_prod_amount']));
+		$shop_prod_cartadd	= false;
 
 		if(!empty($shop_prod_id) && !empty($shop_prod_amount)) {
 
@@ -257,8 +258,16 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 
 			} else {
 
-				$shop_prod_cartadd = false;
+				$data = _dbGet('phpwcms_shop_products', 'shopprod_size,shopprod_color', 'shopprod_status=1 AND shopprod_id='.$shop_prod_id);
+				
+				if(isset($data[0]['shopprod_size'])) {
+					$data[0]['shopprod_size']	= trim($data[0]['shopprod_size']);
+					$data[0]['shopprod_color']	= trim($data[0]['shopprod_color']);
 
+					if($data[0]['shopprod_size'] === '' && $data[0]['shopprod_color'] === '') {
+						$shop_prod_cartadd = true;
+					}
+				}
 			}
 
 			if($shop_prod_cartadd) {
@@ -280,6 +289,10 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 					$_SESSION[CART_KEY]['total'][$shop_prod_id.$opt_1.$opt_2]  = $shop_prod_amount;
 				}
 
+			} else {
+				
+				// Set Cart error
+				
 			}
 
 		}
