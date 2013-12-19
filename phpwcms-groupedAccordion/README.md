@@ -1,7 +1,7 @@
 phpwcms-groupedAccordion
 ================
 
-**groupedAccordion** is jQuery based template for grouped content parts as introduced with this [commit](https://github.com/slackero/phpwcms/commit/5794d67969916bd3a49ce47e3f3880fc08707f4e). It is based on the slightly enhanced version of [Zebra_Accordion](http://stefangabos.ro/jquery/zebra-accordion/).
+**groupedAccordion** is a frontend render script to detect grouped content parts as introduced with this [commit](https://github.com/slackero/phpwcms/commit/5794d67969916bd3a49ce47e3f3880fc08707f4e) and inject a jQuery based Accordion script, based on a slightly enhanced version of [Zebra_Accordion](http://stefangabos.ro/jquery/zebra-accordion/).
 
 Copyright (c) 2013 Oliver Georgi — contact@phpwcms.de
 
@@ -13,7 +13,7 @@ Download related files and place content of folder **template** into the templat
 
 ### Requires
 
-phpwcms with jQuery support Version 1.6 or newer.
+phpwcms released after Dec. 11, 2013 with jQuery support Version 1.6 or newer.
 
 
 ### Configuration
@@ -23,7 +23,7 @@ Open the frontend render script at `template/inc_script/frontend_render/grouped-
 	switch: '.foo' // jQuery selector like '.class', 'tag', '#id'…
 	content: '.foo' // jQuery selector like '.class', 'tag', '#id'…
 
-The frontend render script is based on template vars as configured in `config/phpwcms/conf.template_default.inc.php`. You have to use a phpwcms installation released after Dec. 11, 2013. `$template_default['classes']['cpgroup-title']` and `$template_default['classes']['cpgroup-content']` are used for selection `switch` and `content` option.
+The frontend render script is based on template vars as configured in `config/phpwcms/conf.template_default.inc.php`. `$template_default['classes']['cpgroup-title']` and `$template_default['classes']['cpgroup-content']` are used to set the `switch` and `content` selectors.
 
 You are free to set your own values for related CSS class names in `conf.template_default.inc.php` or inside of your scripts (*frontend init/render*):
 
