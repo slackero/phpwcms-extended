@@ -1,0 +1,64 @@
+<!--IMAGE_SETTINGS_START//-->
+; this is formatted like WIN.INI
+; please: do not use comments for value lines
+; settings will overwrite CP settings
+width		= 316
+height		= 300
+width_zoom	= 1000
+height_zoom	= 700
+col			= 9999
+space		= 0
+zoom		= 0
+lightbox	= 0
+nocaption	= 0
+; 0 = no center, 1 = horizontal/vertical, 2 = horizontal, 3 = vertical
+center		= 0
+crop		= 1
+crop_zoom	= 0
+;fx1			= 0
+;fx2			= 0
+;fx3			= 0
+; InfoText render: plain, html, markdown, textile
+text_render	= markdown
+<!--IMAGE_SETTINGS_END//-->
+
+<!--IMAGES_HEADER_START//-->
+<div class="carousel-wrapper clearfix">
+	<ul class="carousel">[TEXT]
+		<li class="carousel-item">
+			<div class="carousel-text-only">
+				[TITLE]<h3>{TITLE}</h3>[/TITLE]
+				[SUBTITLE]<h4>{SUBTITLE}</h4>[/SUBTITLE]
+				{TEXT}
+			</div>
+		</li>[/TEXT]
+<!--IMAGES_HEADER_END//-->
+
+<!--IMAGES_ENTRY_START//-->
+		<li class="carousel-item[FIRST] first[/FIRST][LAST] last[/LAST][ROW] row{ROW}[/ROW]">
+			<span class="image">{IMAGE}</span>
+			<div class="teaser">
+				[CAPTION]<h4>{CAPTION}</h4>[/CAPTION]
+				[INFOTEXT]{INFOTEXT}[/INFOTEXT]
+				[URL]<a href="{URL}"[URL_TARGET] target="{URL_TARGET}"[/URL_TARGET] class="read-more">more &raquo;</a>[/URL]
+			</div>
+		</li>
+<!--IMAGES_ENTRY_END//-->
+
+<!--IMAGES_ENTRY_SPACER_START//--><!--IMAGES_ENTRY_SPACER_END//-->
+<!--IMAGES_ROW_SPACER_START//--><!--IMAGES_ROW_SPACER_END//-->
+
+<!--IMAGES_FOOTER_START//-->
+	</ul>
+	<!--
+	<div class="carousel-nav">
+		<a class="carousel-prev" href="#"><span>&lsaquo;</span></a>
+		<a class="carousel-next" href="#"><span>&rsaquo;</span></a>
+	</div>
+	-->
+</div>
+<!-- JS: {TEMPLATE}lib/carousel/jquery.touchSwipe.min.js -->
+<!-- JS: {TEMPLATE}lib/carousel/jquery.carouFredSel-6.2.1-packed.js -->
+<!-- JS: {TEMPLATE}lib/carousel/carousel.js -->
+<!-- CSS: {TEMPLATE}lib/carousel/carousel.css -->
+<!--IMAGES_FOOTER_END//-->
