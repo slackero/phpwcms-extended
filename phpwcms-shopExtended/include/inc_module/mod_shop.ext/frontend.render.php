@@ -36,6 +36,22 @@ if(_getConfig( 'shop_pref_felang' )) {
 	define('CART_KEY', 'shopping_cart');
 }
 
+if(!function_exists('dec_num_count')) {
+	function dec_num_count($value) {
+		if((int)$value == $value) {
+			return 0;
+		} elseif(!is_numeric($value)) {
+			return false;
+		}
+		return strlen($value) - strrpos($value, '.') - 1;
+	}
+}
+if(!function_exists('phpwcms_boolval')) {
+	function phpwcms_boolval(&$BOOL, &$STRICT=false) {
+		return boolval($BOOL, $STRICT);
+	}
+}
+
 // set CART session value
 if(!isset($_SESSION[CART_KEY])) {
 	$_SESSION[CART_KEY] = array();
@@ -60,15 +76,6 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 	if($_tmpl['source']) {
 
 		$_tmpl['config'] = parse_ini_str(get_tmpl_section('CONFIG', $_tmpl['source']), false);
-		
-		// Uncomment if CMS is released before 2013-10-01
-		/*
-		if(!function_exists('phpwcms_boolval')) {
-			function phpwcms_boolval(&$BOOL, &$STRICT=false) {
-				return boolval($BOOL, $STRICT);
-			}
-		}
-		*/
 
 		$_tmpl['config']['cat_list_products']		= empty($_tmpl['config']['cat_list_products']) ? false : phpwcms_boolval($_tmpl['config']['cat_list_products']);
 		$_tmpl['config']['image_list_lightbox']		= empty($_tmpl['config']['image_list_lightbox']) ? false : phpwcms_boolval($_tmpl['config']['image_list_lightbox']);
@@ -144,11 +151,12 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 	// merge config settings like translations and so on
 	$_tmpl['config'] = array_merge(	array(
 							'cat_all'					=> '@@All products@@',
+							'cat_all_pos'				=> 'bottom',
 							'cat_list_products'			=> false,
 							'cat_subcat_spacer'			=> ' / ',
 							'price_decimals'			=> 2,
-							'vat_decimals'				=> 0,
-							'weight_decimals'			=> 0,
+							'vat_decimals'				=> 1,
+							'weight_decimals'			=> 1,
 							'dec_point'					=> ".",
 							'thousands_sep'				=> ",",
 							'image_list_width'			=> 200,
@@ -219,6 +227,10 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 		$_tmpl['config']['shop_wrap'] = array('prefix'=>'', 'suffix'=>'');
 	}
 
+	$_tmpl['config']['price_decimals'] = (int) $_tmpl['config']['price_decimals'];
+	$_tmpl['config']['vat_decimals'] = (int) $_tmpl['config']['vat_decimals'];
+	$_tmpl['config']['weight_decimals'] = (int) $_tmpl['config']['weight_decimals'];
+
 	if($_tmpl['config']['shop_css']) {
 		renderHeadCSS($_tmpl['config']['shop_css']);
 	}
@@ -259,7 +271,7 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 			} else {
 
 				$data = _dbGet('phpwcms_shop_products', 'shopprod_size,shopprod_color', 'shopprod_status=1 AND shopprod_id='.$shop_prod_id);
-				
+
 				if(isset($data[0]['shopprod_size'])) {
 					$data[0]['shopprod_size']	= trim($data[0]['shopprod_size']);
 					$data[0]['shopprod_color']	= trim($data[0]['shopprod_color']);
@@ -290,9 +302,9 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 				}
 
 			} else {
-				
+
 				// Set Cart error
-				
+
 			}
 
 		}
@@ -516,24 +528,39 @@ if( $_shop_load_cat !== false ) {
 
 	}
 
-	if( count($shop_cat) ) {
+	$shop_cat = count($shop_cat) ? implode(LF.'	', $shop_cat) : '';
+	$shop_cat_all = '';
 
-		if( ! $shop_limited_cat ) {
-			$shop_cat[$x]  = '<li id="shopcat-all"';
-			if($shop_cat_selected == 'all') {
-				$shop_cat[$x] .= ' class="active"';
-			}
-			$shop_cat[$x] .= '><a href="' . rel_url(array('shop_cat' => 'all'), array('shop_detail', 'shop_cart'), $_tmpl['config']['shop_url']) . '">@@';
-			$shop_cat[$x] .= html_specialchars($_tmpl['config']['cat_all']);
-			$shop_cat[$x] .= '@@</a>';
-			$shop_cat[$x] .= '</li>';
-		}
-		$shop_cat = '<ul class="'.$template_default['classes']['shop-category-menu'].'">' . LF.'	' . implode(LF.'	', $shop_cat) . LF . '</ul>';
 
+	if(empty($_tmpl['config']['cat_all_pos'])) {
+		// fallback for older templates
+		$_tmpl['config']['cat_all_pos'] = 'bottom';
 	} else {
+		$_tmpl['config']['cat_all_pos'] = strtolower($_tmpl['config']['cat_all_pos']);
+		if($_tmpl['config']['cat_all_pos'] != 'top' && $_tmpl['config']['cat_all_pos'] != 'bottom') {
+			$_tmpl['config']['cat_all_pos'] = 'none';
+		}
+	}
 
-		$shop_cat = '';
+	if( ! $shop_limited_cat && $_tmpl['config']['cat_all_pos'] != 'none') {
+		$shop_cat_all .= '	<li id="shopcat-all"';
+		if($shop_cat_selected == 'all') {
+			$shop_cat_all .= ' class="active"';
+		}
+		$shop_cat_all .= '><a href="' . rel_url(array('shop_cat' => 'all'), array('shop_detail', 'shop_cart'), $_tmpl['config']['shop_url']) . '">@@';
+		$shop_cat_all .= html_specialchars($_tmpl['config']['cat_all']);
+		$shop_cat_all .= '@@</a>';
+		$shop_cat_all .= '</li>';
 
+		if($_tmpl['config']['cat_all_pos'] == 'top') {
+			$shop_cat = $shop_cat_all . LF . '	' . $shop_cat;
+		} else {
+			$shop_cat .= LF . $shop_cat_all;
+		}
+	}
+
+	if($shop_cat !== '') {
+		$shop_cat = '<ul class="'.$template_default['classes']['shop-category-menu'].'">' . LF . $shop_cat . LF . '</ul>';
 	}
 
 	$content['all'] = str_replace('{SHOP_CATEGORIES}', $shop_cat, $content['all']);
@@ -545,7 +572,6 @@ if( $_shop_load_cat !== false ) {
 			$GLOBALS['_getVar']['shop_cat'] .= '_' . $shop_subcat_selected;
 		}
 	}
-
 }
 
 
@@ -624,21 +650,25 @@ if( $_shop_load_list !== false ) {
 
 		foreach($data as $row) {
 
-			$_price['vat'] = $row['shopprod_vat'];
+			$row['vat'] = (float) $row['shopprod_vat'];
+			$row['vat_decimals'] = dec_num_count($row['vat']);
+			if($row['vat_decimals'] < $_tmpl['config']['vat_decimals']) {
+				$row['vat_decimals'] = $_tmpl['config']['vat_decimals'];
+			}
 			if($row['shopprod_netgross'] == 1) {
 				// price given is GROSS price, including VAT
-				$_price['net']		= $row['shopprod_price'] / (1 + $_price['vat'] / 100);
-				$_price['gross']	= $row['shopprod_price'];
+				$row['net']		= $row['shopprod_price'] / (1 + $row['vat'] / 100);
+				$row['gross']	= $row['shopprod_price'];
 			} else {
 				// price given is NET price, excluding VAT
-				$_price['net']		= $row['shopprod_price'];
-				$_price['gross']	= $row['shopprod_price'] * (1 + $_price['vat'] / 100);
+				$row['net']		= $row['shopprod_price'];
+				$row['gross']	= $row['shopprod_price'] * (1 + $row['vat'] / 100);
 			}
 
-			$_price['vat']		= number_format($_price['vat'],   $_tmpl['config']['vat_decimals'],   $_tmpl['config']['dec_point'], $_tmpl['config']['thousands_sep']);
-			$_price['net']		= number_format($_price['net'],   $_tmpl['config']['price_decimals'], $_tmpl['config']['dec_point'], $_tmpl['config']['thousands_sep']);
-			$_price['gross']	= number_format($_price['gross'], $_tmpl['config']['price_decimals'], $_tmpl['config']['dec_point'], $_tmpl['config']['thousands_sep']);
-			$_price['weight']	= $row['shopprod_weight'] > 0 ? number_format($row['shopprod_weight'], $_tmpl['config']['weight_decimals'], $_tmpl['config']['dec_point'], $_tmpl['config']['thousands_sep']) : '';
+			$row['vat']		= number_format($row['vat'],   $row['vat_decimals'],   $_tmpl['config']['dec_point'], $_tmpl['config']['thousands_sep']);
+			$row['net']		= number_format($row['net'],   $_tmpl['config']['price_decimals'], $_tmpl['config']['dec_point'], $_tmpl['config']['thousands_sep']);
+			$row['gross']	= number_format($row['gross'], $_tmpl['config']['price_decimals'], $_tmpl['config']['dec_point'], $_tmpl['config']['thousands_sep']);
+			$row['weight']	= $row['shopprod_weight'] > 0 ? number_format($row['shopprod_weight'], $_tmpl['config']['weight_decimals'], $_tmpl['config']['dec_point'], $_tmpl['config']['thousands_sep']) : '';
 
 			$row['shopprod_var'] = @unserialize($row['shopprod_var']);
 
@@ -652,7 +682,6 @@ if( $_shop_load_list !== false ) {
 
 			// select template based on listing or detail view
 			$entry[$x] = $shop_detail_id ? $_tmpl['detail'] : $_tmpl['list_entry'];
-
 
 			//wr begin changed 29.06.12, fixed OG
 			// get the value from the textarea for options, prepare the data, write select drop down
@@ -750,7 +779,7 @@ if( $_shop_load_list !== false ) {
 
 			//wr end changed 29.06.12
 
-			if($_tmpl['config']['on_request_trigger'] == $_price['net']) {
+			if($_tmpl['config']['on_request_trigger'] == $row['net']) {
 
 				$_cart = '';
 				$_cart_add = '';
@@ -805,10 +834,10 @@ if( $_shop_load_list !== false ) {
 			$entry[$x] = render_cnt_template($entry[$x], 'PRODUCT_ADD', html_specialchars($row['shopprod_name2']));
 			$entry[$x] = render_cnt_template($entry[$x], 'PRODUCT_SHORT', $row['shopprod_description0']);
 			$entry[$x] = render_cnt_template($entry[$x], 'PRODUCT_LONG', $row['shopprod_description1']);
-			$entry[$x] = render_cnt_template($entry[$x], 'PRODUCT_WEIGHT', $_price['weight']);
-			$entry[$x] = render_cnt_template($entry[$x], 'PRODUCT_NET_PRICE', $_price['net']);
-			$entry[$x] = render_cnt_template($entry[$x], 'PRODUCT_GROSS_PRICE', $_price['gross']);
-			$entry[$x] = render_cnt_template($entry[$x], 'PRODUCT_VAT', $_price['vat']);
+			$entry[$x] = render_cnt_template($entry[$x], 'PRODUCT_WEIGHT', $row['weight']);
+			$entry[$x] = render_cnt_template($entry[$x], 'PRODUCT_NET_PRICE', $row['net']);
+			$entry[$x] = render_cnt_template($entry[$x], 'PRODUCT_GROSS_PRICE', $row['gross']);
+			$entry[$x] = render_cnt_template($entry[$x], 'PRODUCT_VAT', $row['vat']);
 			$entry[$x] = render_cnt_template($entry[$x], 'PRODUCT_URL', $row['prod_url']['link']);
 
 			if(empty($_shopPref['shop_pref_discount']['discount']) || empty($_shopPref['shop_pref_discount']['percent'])) {
@@ -1031,17 +1060,8 @@ if( $_shop_load_order ) {
 
 		foreach($_step1 as $item_key => $row) {
 			$field_error	= empty($ERROR['inv_address'][$item_key]) ? '' : $ERROR['inv_address'][$item_key];
-			/*
-			$row_checked	= '';
-			if($field_error == '' && $row != '' && preg_match('/^shop_field_(\d+)$/', $item_key, $row_match)) {
-				$row_match = intval($row_match[1]);
-				if(isset($_tmpl['config']['shop_field'][$row_match]['type']) && $_tmpl['config']['shop_field'][$row_match]['type'] === 'CHECK') {
-					if(!empty($_POST[$item_key] && ))
-					$row_checked = ' checked="checked';
-				}
-			}*/
 			$row = html_specialchars($row);
-			$order_process	= render_cnt_template($order_process, $item_key, $row); //.$row_checked
+			$order_process	= render_cnt_template($order_process, $item_key, $row);
 			$order_process	= render_cnt_template($order_process, 'ERROR_'.$item_key, $field_error);
 		}
 
@@ -1308,7 +1328,7 @@ if( $_shop_load_order ) {
 			$_cart_button = '<input type="submit" name="shop_cart_checkout" value="' . html_specialchars($_cart_button) . '" class="cart-checkout-button" />';
 		}
 		$order_process  = preg_replace('/\[CHECKOUT\](.*?)\[\/CHECKOUT\]/s', $_cart_button , $order_process);
-		
+
 		// Empty Cart Button
 		$_cart_button = preg_match("/\[DELETE\](.*?)\[\/DELETE\]/s", $order_process, $g) ? $g[1] : '';
 		if(strpos($_cart_button, 'input ') === false) {
@@ -1415,8 +1435,6 @@ function get_cart_data() {
 	return $data;
 }
 
-
-
 function shop_image_tag($img=array(), $counter=0, $title='') {
 
 	$config =& $GLOBALS['_tmpl']['config'];
@@ -1428,15 +1446,14 @@ function shop_image_tag($img=array(), $counter=0, $title='') {
 	$caption	= empty($img['caption']) ? '' : ' :: '.$img['caption'];
 	$title		= empty($title) ? '' : ' title="'.html_specialchars($title.$caption).'"';
 
-	$thumb_image = get_cached_image(
-			array(	"target_ext"	=>	$img['f_ext'],
-					"image_name"	=>	$img['f_hash'] . '.' . $img['f_ext'],
-					"max_width"		=>	$width,
-					"max_height"	=>	$height,
-					"thumb_name"	=>	md5($img['f_hash'].$width.$height.$GLOBALS['phpwcms']["sharpen_level"].$crop),
-					'crop_image'	=>	$crop
-				  )
-			);
+	$thumb_image = get_cached_image(array(
+		"target_ext"	=>	$img['f_ext'],
+		"image_name"	=>	$img['f_hash'] . '.' . $img['f_ext'],
+		"max_width"		=>	$width,
+		"max_height"	=>	$height,
+		"thumb_name"	=>	md5($img['f_hash'].$width.$height.$GLOBALS['phpwcms']["sharpen_level"].$crop.$GLOBALS['phpwcms']['colorspace']),
+		'crop_image'	=>	$crop
+	));
 
 	if($thumb_image) {
 
@@ -1591,6 +1608,5 @@ function shop_files($data=array()) {
 	return $news['files_result'];
 
 }
-
 
 ?>
