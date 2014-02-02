@@ -3,7 +3,7 @@
  * phpwcms content management system
  *
  * @author Oliver Georgi <oliver@phpwcms.de>
- * @copyright Copyright (c) 2002-2013, Oliver Georgi
+ * @copyright Copyright (c) 2002-2014, Oliver Georgi
  * @license http://opensource.org/licenses/GPL-2.0 GNU GPL-2
  * @link http://www.phpwcms.de
  *
@@ -100,11 +100,17 @@ if($action == 'edit') {
 		// Discount Setting
 		$plugin['data']['shop_pref_discount'] = array(
 			'discount'			=> empty($_POST['pref_discount']) ? 0 : 1,
-			'percent'			=> clean_slweg($_POST['pref_discount_percent'])
+			'percent'			=> clean_slweg($_POST['pref_discount_percent']),
+			'amount'			=> clean_slweg($_POST['pref_discount_amount']),
+			'freeshipping'		=> empty($_POST['pref_discount_freeshipping']) ? 0 : 1
 		);
-		$plugin['data']['shop_pref_discount']['percent'] = str_replace($BLM['thousands_sep'], '', $plugin['data']['shop_pref_discount']['percent']);
-		$plugin['data']['shop_pref_discount']['percent'] = round(str_replace($BLM['dec_point'], '.', $plugin['data']['shop_pref_discount']['percent']), 2);
-
+		$plugin['data']['shop_pref_discount']['percent']	= str_replace($BLM['thousands_sep'], '', $plugin['data']['shop_pref_discount']['percent']);
+		$plugin['data']['shop_pref_discount']['percent']	= round(str_replace($BLM['dec_point'], '.', $plugin['data']['shop_pref_discount']['percent']), 2);
+		$plugin['data']['shop_pref_discount']['amount']		= str_replace($BLM['thousands_sep'], '', $plugin['data']['shop_pref_discount']['amount']);
+		$plugin['data']['shop_pref_discount']['amount']		= round(str_replace($BLM['dec_point'], '.', $plugin['data']['shop_pref_discount']['amount']), 2);
+		if($plugin['data']['shop_pref_discount']['amount'] == 0) {
+			$plugin['data']['shop_pref_discount']['discount'] = 0;
+		}
 
 
 		// Low Order
@@ -142,13 +148,10 @@ if($action == 'edit') {
 
 			// save and back to listing mode
 			headerRedirect( shop_url('controller=pref', '') );
-
 		}
-
 	}
 
 	$_checkPref = array(
-
 		'shop_pref_currency'		=>	'',
 		'shop_pref_unit_weight'		=>	'kg',
 		'shop_pref_vat'				=>	array( '0.00', '7.00', '19.00' ),
@@ -174,10 +177,9 @@ if($action == 'edit') {
 											 ),
 		'shop_pref_terms'			=>	'',
 		'shop_pref_terms_format'	=>  0,
-		'shop_pref_discount'		=> array('discount' => 0, 'percent' => 0),
+		'shop_pref_discount'		=> array('discount' => 0, 'percent' => 0, 'amount' => 0, 'freeshipping' => 0),
 		'shop_pref_loworder'		=> array('loworder' => 0, 'under' => 0, 'charge' => 0, 'vat' => 0)
-
-				);
+	);
 
 	// retrieve all settings
 	foreach( $_checkPref as $key => $value ) {
@@ -186,8 +188,6 @@ if($action == 'edit') {
 			_setConfig( $key , $plugin['data'][ $key ], 'module_shop');
 		}
 	}
-
 }
-
 
 ?>

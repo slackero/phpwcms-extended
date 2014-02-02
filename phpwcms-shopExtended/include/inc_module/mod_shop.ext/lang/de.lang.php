@@ -105,7 +105,6 @@ $BLM['shopprod_total_vat']		= 'Mehrwertsteuer';
 $BLM['shopprod_total_gross']	= 'Endbetrag (Brutto)';
 
 $BLM['shopprod_subtotal']		= 'Warenbetrag';
-$BLM['shopprod_shipping']		= 'Versandkosten';
 
 $BLM['shopprod_email_customer']	= 'E-Mail an Kunden';
 $BLM['shopprod_email_shop']		= 'E-Mail an Shop';
@@ -123,6 +122,8 @@ $BLM['shopprod_loworder_under']		= 'unter';
 $BLM['shopprod_loworder_charge']	= 'Zuschlag';
 
 $BLM['shopprod_discount']			= 'Rabatt';
+$BLM['shopprod_discount_from']		= 'ab Nettobetrag';
+$BLM['shopprod_freeshipping']		= 'versandkostenfrei';
 
 $BLM['shopprod_lang_support']	= 'Frontend Sprachunterst&uuml;tzung';
 $BLM['shopprod_overwrite_meta']	= 'Produktdetail &uuml;berschreibt Metadaten';

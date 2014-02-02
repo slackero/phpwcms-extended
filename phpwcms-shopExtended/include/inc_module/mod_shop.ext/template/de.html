@@ -228,8 +228,8 @@ order_number_style = DE%05s
 		</tr>
 		<tr>
 			<td>Versandkosten</td>
-			<td>versandkostenfrei</td>
-			<td>{CURRENCY_SYMBOL}</td>
+			<td colspan="2">versandkostenfrei</td>
+			<!-- <td>{CURRENCY_SYMBOL}</td> -->
 		</tr>
 		[/SHIPPING_ELSE]
 
@@ -261,6 +261,36 @@ order_number_style = DE%05s
 			<td colspan="3"><hr /></td>
 		</tr>
 
+		[DISCOUNT]
+		<tr>
+			<td colspan="3"><strong>Nachlass</strong></td>
+		</tr>
+		<tr>
+			<td>Rabatt:</td>
+			<td align="right">{DISCOUNT}</td>
+			<td>%</td>
+		</tr>
+		<tr>
+			<td>Rabattbetrag, netto:</td>
+			<td align="right">{DISCOUNT_NET}</td>
+			<td>{CURRENCY_SYMBOL}</td>
+		</tr>
+		<tr>
+			<td>Rabattbetrag, MwSt.:</td>
+			<td align="right">{DISCOUNT_VAT}</td>
+			<td>{CURRENCY_SYMBOL}</td>
+		</tr>
+		<tr>
+			<td>Rabattbetrag, brutto:</td>
+			<td align="right">{DISCOUNT_GROSS}</td>
+			<td>{CURRENCY_SYMBOL}</td>
+		</tr>
+
+		<tr>
+			<td colspan="3"><hr /></td>
+		</tr>
+		[/DISCOUNT]
+
 		<tr>
 			<td colspan="3"><strong>Gesamtbetrag</strong></td>
 		</tr>
@@ -287,8 +317,8 @@ order_number_style = DE%05s
 	<div>
 		<a href="{SHOP_LINK}">Einkauf fortsetzen</a>
 
-		[DELETE]Warenkorb leeren[/DELETE]
 		[UPDATE]Warenkorb aktualisieren[/UPDATE]
+		[DELETE]Warenkorb leeren[/DELETE]
 		[CHECKOUT]Zur Kasse[/CHECKOUT]
 	</div>
 </div>
@@ -453,8 +483,8 @@ order_number_style = DE%05s
 		</tr>
 		<tr>
 			<td>Versandkosten</td>
-			<td>versandkostenfrei</td>
-			<td>{CURRENCY_SYMBOL}</td>
+			<td colspan="2">versandkostenfrei</td>
+			<!-- <td>{CURRENCY_SYMBOL}</td> -->
 		</tr>
 		[/SHIPPING_ELSE]
 
@@ -485,6 +515,36 @@ order_number_style = DE%05s
 		<tr>
 			<td colspan="3"><hr /></td>
 		</tr>
+
+		[DISCOUNT]
+		<tr>
+			<td colspan="3"><strong>Nachlass</strong></td>
+		</tr>
+		<tr>
+			<td>Rabatt:</td>
+			<td align="right">{DISCOUNT}</td>
+			<td>%</td>
+		</tr>
+		<tr>
+			<td>Rabattbetrag, netto:</td>
+			<td align="right">{DISCOUNT_NET}</td>
+			<td>{CURRENCY_SYMBOL}</td>
+		</tr>
+		<tr>
+			<td>Rabattbetrag, MwSt.:</td>
+			<td align="right">{DISCOUNT_VAT}</td>
+			<td>{CURRENCY_SYMBOL}</td>
+		</tr>
+		<tr>
+			<td>Rabattbetrag, brutto:</td>
+			<td align="right">{DISCOUNT_GROSS}</td>
+			<td>{CURRENCY_SYMBOL}</td>
+		</tr>
+
+		<tr>
+			<td colspan="3"><hr /></td>
+		</tr>
+		[/DISCOUNT]
 
 		<tr>
 			<td colspan="3"><strong>Gesamt</strong></td>
@@ -592,6 +652,13 @@ Netto:   {SUBTOTAL_NET} {CURRENCY_SYMBOL}
 MwSt.:   {SUBTOTAL_VAT} {CURRENCY_SYMBOL}
 Brutto:  {SUBTOTAL_GROSS} {CURRENCY_SYMBOL}
 
+Rabatt:  {DISCOUNT} %
+=======
+
+Netto:   {DISCOUNT_NET} {CURRENCY_SYMBOL}
+MwSt.:   {DISCOUNT_VAT} {CURRENCY_SYMBOL}
+Brutto:  {DISCOUNT_GROSS} {CURRENCY_SYMBOL}
+
 Versandkosten:
 ==============
 
@@ -638,6 +705,13 @@ Zwischensumme:
 Netto:   {SUBTOTAL_NET} {CURRENCY_SYMBOL}
 MwSt.:   {SUBTOTAL_VAT} {CURRENCY_SYMBOL}
 Brutto:  {SUBTOTAL_GROSS} {CURRENCY_SYMBOL}
+
+Rabatt:  {DISCOUNT} %
+=======
+
+Netto:   {DISCOUNT_NET} {CURRENCY_SYMBOL}
+MwSt.:   {DISCOUNT_VAT} {CURRENCY_SYMBOL}
+Brutto:  {DISCOUNT_GROSS} {CURRENCY_SYMBOL}
 
 Versandkosten:
 ==============

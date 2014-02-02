@@ -104,8 +104,6 @@ $BLM['shopprod_total_vat']		= 'VAT';
 $BLM['shopprod_total_gross']	= 'Total gross';
 
 $BLM['shopprod_subtotal']		= 'Subtotal';
-$BLM['shopprod_shipping']		= 'Shipping costs';
-
 
 $BLM['shopprod_email_customer']	= 'Mail to customer';
 $BLM['shopprod_email_shop']		= 'Mail to shop';
@@ -123,8 +121,9 @@ $BLM['shopprod_loworder_under']		= 'below';
 $BLM['shopprod_loworder_charge']	= 'surcharge';
 
 $BLM['shopprod_discount']			= 'Discount';
+$BLM['shopprod_discount_from']		= 'from net amount';
+$BLM['shopprod_freeshipping']		= 'free shipping';
 
 $BLM['shopprod_lang_support']	= 'Frontend language support';
 $BLM['shopprod_overwrite_meta']	= 'Product detail overwrites metadata';
-
 ?>

@@ -212,7 +212,7 @@ order_number_style = EN%05s
 			<td>{CURRENCY_SYMBOL}</td>
 		</tr>
 		<tr>
-			<td>Shipping Vat:</td>
+			<td>Shipping VAT:</td>
 			<td align="right">{SHIPPING_VAT}</td>
 			<td>{CURRENCY_SYMBOL}</td>
 		</tr>
@@ -228,8 +228,8 @@ order_number_style = EN%05s
 		</tr>
 		<tr>
 			<td>Shipping Costs</td>
-			<td>free shipping</td>
-			<td>{CURRENCY_SYMBOL}</td>
+			<td colspan="2">free shipping</td>
+			<!-- <td>{CURRENCY_SYMBOL}</td> -->
 		</tr>
 		[/SHIPPING_ELSE]
 
@@ -247,7 +247,7 @@ order_number_style = EN%05s
 			<td>{CURRENCY_SYMBOL}</td>
 		</tr>
 		<tr>
-			<td>Subtotal Vat:</td>
+			<td>Subtotal VAT:</td>
 			<td align="right">{SUBTOTAL_VAT}</td>
 			<td>{CURRENCY_SYMBOL}</td>
 		</tr>
@@ -261,6 +261,36 @@ order_number_style = EN%05s
 			<td colspan="3"><hr /></td>
 		</tr>
 
+		[DISCOUNT]
+		<tr>
+			<td colspan="3"><strong>Discount</strong></td>
+		</tr>
+		<tr>
+			<td>Discount:</td>
+			<td align="right">{DISCOUNT}</td>
+			<td>%</td>
+		</tr>
+		<tr>
+			<td>Discount Net:</td>
+			<td align="right">{DISCOUNT_NET}</td>
+			<td>{CURRENCY_SYMBOL}</td>
+		</tr>
+		<tr>
+			<td>Discount VAT:</td>
+			<td align="right">{DISCOUNT_VAT}</td>
+			<td>{CURRENCY_SYMBOL}</td>
+		</tr>
+		<tr>
+			<td>Discount Gross:</td>
+			<td align="right">{DISCOUNT_GROSS}</td>
+			<td>{CURRENCY_SYMBOL}</td>
+		</tr>
+
+		<tr>
+			<td colspan="3"><hr /></td>
+		</tr>
+		[/DISCOUNT]
+
 		<tr>
 			<td colspan="3"><strong>Total</strong></td>
 		</tr>
@@ -271,7 +301,7 @@ order_number_style = EN%05s
 			<td>{CURRENCY_SYMBOL}</td>
 		</tr>
 		<tr>
-			<td>Total Vat:</td>
+			<td>Total VAT:</td>
 			<td align="right">{TOTAL_VAT}</td>
 			<td>{CURRENCY_SYMBOL}</td>
 		</tr>
@@ -287,8 +317,8 @@ order_number_style = EN%05s
 	<div>
 		<a href="{SHOP_LINK}">Continue Shopping</a>
 
-		[DELETE]Empty Cart[/DELETE]
 		[UPDATE]Update Cart[/UPDATE]
+		[DELETE]Empty Cart[/DELETE]
 		[CHECKOUT]Checkout[/CHECKOUT]
 	</div>
 </div>
@@ -437,7 +467,7 @@ order_number_style = EN%05s
 			<td>{CURRENCY_SYMBOL}</td>
 		</tr>
 		<tr>
-			<td>Shipping Vat:</td>
+			<td>Shipping VAT:</td>
 			<td align="right">{SHIPPING_VAT}</td>
 			<td>{CURRENCY_SYMBOL}</td>
 		</tr>
@@ -453,8 +483,8 @@ order_number_style = EN%05s
 		</tr>
 		<tr>
 			<td>Shipping Costs</td>
-			<td>free shipping</td>
-			<td>{CURRENCY_SYMBOL}</td>
+			<td colspan="2">free shipping</td>
+			<!-- <td>{CURRENCY_SYMBOL}</td> -->
 		</tr>
 		[/SHIPPING_ELSE]
 
@@ -472,7 +502,7 @@ order_number_style = EN%05s
 			<td>{CURRENCY_SYMBOL}</td>
 		</tr>
 		<tr>
-			<td>Subtotal Vat:</td>
+			<td>Subtotal VAT:</td>
 			<td align="right">{SUBTOTAL_VAT}</td>
 			<td>{CURRENCY_SYMBOL}</td>
 		</tr>
@@ -496,7 +526,7 @@ order_number_style = EN%05s
 			<td>{CURRENCY_SYMBOL}</td>
 		</tr>
 		<tr>
-			<td>Total Vat:</td>
+			<td>Total VAT:</td>
 			<td align="right">{TOTAL_VAT}</td>
 			<td>{CURRENCY_SYMBOL}</td>
 		</tr>
@@ -597,6 +627,12 @@ Shipping Net:    {SHIPPING_NET} {CURRENCY_SYMBOL}
 Shipping VAT:    {SHIPPING_VAT} {CURRENCY_SYMBOL}
 Shipping Gross:  {SHIPPING_GROSS} {CURRENCY_SYMBOL}
 
+Discount: {DISCOUNT} %
+=========
+Discount Net:    {DISCOUNT_NET} {CURRENCY_SYMBOL}
+Discount VAT:    {DISCOUNT_VAT} {CURRENCY_SYMBOL}
+Discount Gross:  {DISCOUNT_GROSS} {CURRENCY_SYMBOL}
+
 Total:
 ======
 
@@ -636,6 +672,11 @@ Shipping Net:    {SHIPPING_NET} {CURRENCY_SYMBOL}
 Shipping VAT:    {SHIPPING_VAT} {CURRENCY_SYMBOL}
 Shipping Gross:  {SHIPPING_GROSS} {CURRENCY_SYMBOL}
 
+Discount:        {DISCOUNT} %
+Discount Net:    {DISCOUNT_NET} {CURRENCY_SYMBOL}
+Discount VAT:    {DISCOUNT_VAT} {CURRENCY_SYMBOL}
+Discount Gross:  {DISCOUNT_GROSS} {CURRENCY_SYMBOL}
+
 Net:             {TOTAL_NET} {CURRENCY_SYMBOL}
 VAT:             {TOTAL_VAT} {CURRENCY_SYMBOL}
 Total:           {TOTAL_GROSS} {CURRENCY_SYMBOL}
@@ -664,5 +705,3 @@ Let's go.
 	<p>Your potential order number is: <strong>{ORDER}</strong>.</p>
 	<p>If you wish <a href="mailto:shop@mydomain.com?subject={SUBJECT}&amp;body={MSG}">click this</a> to send your order message by email.</p>
 <!--ORDER_NOT_DONE_END//-->
-
-
