@@ -18,8 +18,8 @@ if (!defined('PHPWCMS_ROOT')) {
 
 
 /*
- * module ads/banner managament
- * ============================
+ * Module/Plug-in Shop & Products Extended
+ * =======================================
  *
  * some defaults for modules: $phpwcms['modules'][$module]
  * store all related in here and holds some default values

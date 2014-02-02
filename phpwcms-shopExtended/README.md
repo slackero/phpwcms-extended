@@ -13,6 +13,10 @@ Changes
 #### 2013-07-02
 - New option to set shipping fees based on total price
 
+#### 2014-02-01
+- New template option (bottom|top|none) to change position of "All products" category or disable it
+- Fallback to handle false rounding for the VAT decimals replacer
+
 #### 2014-02-02
 - New option to handle discount based on minimum net price
 - New option to set free shipping when discount is valid
