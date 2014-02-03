@@ -22,6 +22,9 @@ Changes
 - New option to set free shipping when discount is valid
 - Templates extended by discount section
 
+#### 2014-02-03
+- Extended by 2 additional discount options
+
 
 ToDo
 ----

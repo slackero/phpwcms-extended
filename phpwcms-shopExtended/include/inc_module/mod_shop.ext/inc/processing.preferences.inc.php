@@ -102,16 +102,32 @@ if($action == 'edit') {
 			'discount'			=> empty($_POST['pref_discount']) ? 0 : 1,
 			'percent'			=> clean_slweg($_POST['pref_discount_percent']),
 			'amount'			=> clean_slweg($_POST['pref_discount_amount']),
-			'freeshipping'		=> empty($_POST['pref_discount_freeshipping']) ? 0 : 1
+			'freeshipping'		=> empty($_POST['pref_discount_freeshipping']) ? 0 : 1,
+
+			'discount_1'		=> empty($_POST['pref_discount_1']) ? 0 : 1,
+			'percent_1'			=> clean_slweg($_POST['pref_discount_percent_1']),
+			'amount_1'			=> clean_slweg($_POST['pref_discount_amount_1']),
+			'freeshipping_1'	=> empty($_POST['pref_discount_freeshipping_1']) ? 0 : 1,
+
+			'discount_2'		=> empty($_POST['pref_discount_2']) ? 0 : 1,
+			'percent_2'			=> clean_slweg($_POST['pref_discount_percent_2']),
+			'amount_2'			=> clean_slweg($_POST['pref_discount_amount_2']),
+			'freeshipping_2'	=> empty($_POST['pref_discount_freeshipping_2']) ? 0 : 1
 		);
 		$plugin['data']['shop_pref_discount']['percent']	= str_replace($BLM['thousands_sep'], '', $plugin['data']['shop_pref_discount']['percent']);
 		$plugin['data']['shop_pref_discount']['percent']	= round(str_replace($BLM['dec_point'], '.', $plugin['data']['shop_pref_discount']['percent']), 2);
 		$plugin['data']['shop_pref_discount']['amount']		= str_replace($BLM['thousands_sep'], '', $plugin['data']['shop_pref_discount']['amount']);
 		$plugin['data']['shop_pref_discount']['amount']		= round(str_replace($BLM['dec_point'], '.', $plugin['data']['shop_pref_discount']['amount']), 2);
-		if($plugin['data']['shop_pref_discount']['amount'] == 0) {
-			$plugin['data']['shop_pref_discount']['discount'] = 0;
-		}
 
+		$plugin['data']['shop_pref_discount']['percent_1']	= str_replace($BLM['thousands_sep'], '', $plugin['data']['shop_pref_discount']['percent_1']);
+		$plugin['data']['shop_pref_discount']['percent_1']	= round(str_replace($BLM['dec_point'], '.', $plugin['data']['shop_pref_discount']['percent_1']), 2);
+		$plugin['data']['shop_pref_discount']['amount_1']	= str_replace($BLM['thousands_sep'], '', $plugin['data']['shop_pref_discount']['amount_1']);
+		$plugin['data']['shop_pref_discount']['amount_1']	= round(str_replace($BLM['dec_point'], '.', $plugin['data']['shop_pref_discount']['amount_1']), 2);
+
+		$plugin['data']['shop_pref_discount']['percent_2']	= str_replace($BLM['thousands_sep'], '', $plugin['data']['shop_pref_discount']['percent_2']);
+		$plugin['data']['shop_pref_discount']['percent_2']	= round(str_replace($BLM['dec_point'], '.', $plugin['data']['shop_pref_discount']['percent_2']), 2);
+		$plugin['data']['shop_pref_discount']['amount_2']	= str_replace($BLM['thousands_sep'], '', $plugin['data']['shop_pref_discount']['amount_2']);
+		$plugin['data']['shop_pref_discount']['amount_2']	= round(str_replace($BLM['dec_point'], '.', $plugin['data']['shop_pref_discount']['amount_2']), 2);
 
 		// Low Order
 		$plugin['data']['shop_pref_loworder'] = array(
@@ -162,22 +178,28 @@ if($action == 'edit') {
 		'shop_pref_id_cart'			=>	0,
 		'shop_pref_felang'			=>	0,
 		'shop_pref_shipping_calc'	=>	0,
-		'shop_pref_shipping'		=>	array(	0 => array('weight'=>'50', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0),
-												1 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0),
-												2 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0),
-												3 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0),
-												4 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0)
-											 ),
-		'shop_pref_payment'			=>	array(	'paypal' => 1,
-												'prepay'=> 1,
-												'pod' => 1,
-												'onbill' => 1,
-												'ccard' => 1,
-												'accepted_ccard' => array('americanexpress', 'mastercard', 'visa')
-											 ),
+		'shop_pref_shipping'		=>	array(
+			0 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0),
+			1 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0),
+			2 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0),
+			3 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0),
+			4 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0)
+		),
+		'shop_pref_payment'			=>	array(
+			'paypal' => 1,
+			'prepay'=> 1,
+			'pod' => 1,
+			'onbill' => 1,
+			'ccard' => 1,
+			'accepted_ccard' => array('americanexpress', 'mastercard', 'visa')
+		),
 		'shop_pref_terms'			=>	'',
 		'shop_pref_terms_format'	=>  0,
-		'shop_pref_discount'		=> array('discount' => 0, 'percent' => 0, 'amount' => 0, 'freeshipping' => 0),
+		'shop_pref_discount'		=> array(
+			'discount' => 0, 'percent' => 0, 'amount' => 0, 'freeshipping' => 0,
+			'discount_1' => 0, 'percent_1' => 0, 'amount_1' => 0, 'freeshipping_1' => 0,
+			'discount_2' => 0, 'percent_2' => 0, 'amount_2' => 0, 'freeshipping_2' => 0
+		),
 		'shop_pref_loworder'		=> array('loworder' => 0, 'under' => 0, 'charge' => 0, 'vat' => 0)
 	);
 

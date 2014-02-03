@@ -209,6 +209,29 @@ if (!defined('PHPWCMS_ROOT')) {
 				<td><input type="checkbox" name="pref_discount_freeshipping" id="pref_discount_freeshipping" value="1"<?php is_checked('1', @$plugin['data']['shop_pref_discount']['freeshipping']) ?> onchange="enableSubmit();" /></td>
 				<td class="chatlist"><?php echo $BLM['shopprod_freeshipping'] ?></td>
 			</tr>
+
+			<tr>
+				<td><input type="checkbox" name="pref_discount_1" id="pref_discount_1" value="1"<?php is_checked('1', @$plugin['data']['shop_pref_discount']['discount_1']) ?> onchange="enableSubmit();" /></td>
+				<td>&nbsp;</td>
+				<td><input name="pref_discount_percent_1" type="text" id="pref_discount_percent_1" class="v12 width40" value="<?php echo html_specialchars( @number_format($plugin['data']['shop_pref_discount']['percent_1'], 1, $BLM['dec_point'], $BLM['thousands_sep'] ) ) ?>" size="10" maxlength="10" onchange="enableSubmit();" /></td>
+				<td class="chatlist nowrap">&nbsp;%, <?php echo $BLM['shopprod_discount_from'] ?>:&nbsp;</td>
+				<td><input name="pref_discount_amount_1" type="text" id="pref_discount_amount_1" class="v12 width60" value="<?php echo html_specialchars( @number_format($plugin['data']['shop_pref_discount']['amount_1'], 2, $BLM['dec_point'], $BLM['thousands_sep'] ) ) ?>" size="10" maxlength="10" onchange="enableSubmit();" /></td>
+				<td>&nbsp;</td>
+				<td><input type="checkbox" name="pref_discount_freeshipping_1" id="pref_discount_freeshipping_1" value="1"<?php is_checked('1', @$plugin['data']['shop_pref_discount']['freeshipping_1']) ?> onchange="enableSubmit();" /></td>
+				<td class="chatlist"><?php echo $BLM['shopprod_freeshipping'] ?></td>
+			</tr>
+
+			<tr>
+				<td><input type="checkbox" name="pref_discount_2" id="pref_discount_2" value="1"<?php is_checked('1', @$plugin['data']['shop_pref_discount']['discount_2']) ?> onchange="enableSubmit();" /></td>
+				<td>&nbsp;</td>
+				<td><input name="pref_discount_percent_2" type="text" id="pref_discount_percent_2" class="v12 width40" value="<?php echo html_specialchars( @number_format($plugin['data']['shop_pref_discount']['percent_2'], 1, $BLM['dec_point'], $BLM['thousands_sep'] ) ) ?>" size="10" maxlength="10" onchange="enableSubmit();" /></td>
+				<td class="chatlist nowrap">&nbsp;%, <?php echo $BLM['shopprod_discount_from'] ?>:&nbsp;</td>
+				<td><input name="pref_discount_amount_2" type="text" id="pref_discount_amount_2" class="v12 width60" value="<?php echo html_specialchars( @number_format($plugin['data']['shop_pref_discount']['amount_2'], 2, $BLM['dec_point'], $BLM['thousands_sep'] ) ) ?>" size="10" maxlength="10" onchange="enableSubmit();" /></td>
+				<td>&nbsp;</td>
+				<td><input type="checkbox" name="pref_discount_freeshipping_2" id="pref_discount_freeshipping_2" value="1"<?php is_checked('1', @$plugin['data']['shop_pref_discount']['freeshipping_2']) ?> onchange="enableSubmit();" /></td>
+				<td class="chatlist"><?php echo $BLM['shopprod_freeshipping'] ?></td>
+			</tr>
+
 		</table></td>
 	</tr>
 
