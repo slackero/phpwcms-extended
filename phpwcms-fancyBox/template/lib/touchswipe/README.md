@@ -10,28 +10,35 @@ Allows exclusion of child elements (interactive elements) as well allowing page 
 
 ### Demos, examples and docs
 
-[http://labs.skinkers.com/touchSwipe](http://labs.skinkers.com/touchSwipe)
+[http://labs.rampinteractive.co.uk/touchSwipe](http://labs.rampinteractive.co.uk/touchSwipe)
+[http://labs.rampinteractive.co.uk/touchSwipe/docs](http://labs.rampinteractive.co.uk/touchSwipe/docs)
 
-[http://labs.skinkers.com/touchSwipe/demo](http://labs.skinkers.com/touchSwipe/demo)
-
-[http://labs.skinkers.com/touchSwipe/docs](http://labs.skinkers.com/touchSwipe/docs)
-
-
+ 
 
 ### For port to XUI see:
 https://github.com/cowgp/xui-touchSwipe
 
 ### Version History
 
-
+* **1.6.5** *2013-08-24*
+    - Merged a few pull requests fixing various bugs, added AMD support.
+* **1.6.4** *2013-04-04*
+    - Fixed bug with cancelThreshold introduced in 1.6.3, where swipe status no longer fired start event, and stopped once swiping back.    
+* **1.6.3** *2013-04-01*    
+    - added doubletap, longtap events and longTapThreshold, doubleTapThreshold property
+* **1.6.2**	*2013-03-23*
+    - Added support for events binding with on / off / bind in jQ for all callback names.
+    - Deprecated the 'click' handler in favour of tap.
+    - added cancelThreshold property
+    - added 'option' method to update init options at runtime
+* **1.6.1** *2013-02-12*    
+    - Added support for ie8 touch events
 * **1.6.0** *2013-01-12*
  	- Fixed bugs with pinching, mainly when both pinch and swipe enabled, as well as adding time threshold for multifinger gestures, so releasing one finger beofre the other doesnt trigger as single finger gesture.
 	- made the demo site all static local HTML pages so they can be run locally by a developer
 	- added jsDoc comments and added documentation for the plugin	
 	- code tidy
 	- added triggerOnTouchLeave property that will end the event when the user swipes off the element.
-
-
 * **1.5.1** *2012-11-22*	
 	- Fixed bug with jQuery 1.8 and trailing comma in excludedElements
 	- Fixed bug with IE and event.preventDefault();

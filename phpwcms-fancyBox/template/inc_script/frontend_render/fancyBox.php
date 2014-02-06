@@ -1,15 +1,15 @@
 <?php
 /**
  * phpwcms jQuery FancyBox replacement for Lightbox (SlimBox)
- * version: 7 Feb 2013
+ * version: 6 Feb 2014
  * @requires jQuery v1.6 or later
  *
  * Examples at http://fancyapps.com/fancybox/
- * License: www.fancyapps.com/fancybox/#license
- * Includes: TouchSwipe, labs.skinkers.com/touchSwipe
+ * License: http://www.fancyapps.com/fancybox/#license
+ * Includes: TouchSwipe, http://labs.skinkers.com/touchSwipe/
  *
- * Copyright 2012–2013 Oliver Georgi - oliver@phpwcms.de
- */
+ * Copyright 2012–2014 Oliver Georgi - oliver@phpwcms.de
+ **/
 
 if(substr($block['jslib'], 0, 6) == 'jquery' && version_compare(substr($block['jslib'], 7), '1.6', '>=')) {
 
@@ -26,7 +26,7 @@ if(substr($block['jslib'], 0, 6) == 'jquery' && version_compare(substr($block['j
 	initJSPlugin('mousewheel.min');
 	
 	if($phpwcms['fancybox_swipe_support']) {
-		initJSPlugin('touchSwipe.min');
+		$block['custom_htmlhead']['touchswipe.js'] = getJavaScriptSourceLink(TEMPLATE_PATH.'lib/touchswipe/jquery.touchSwipe.min.js');
 		$phpwcms['fancybox_swipe_js'] = 'fancybox.initSwipeOn';
 	} else {
 		$phpwcms['fancybox_swipe_js'] = 'fancybox.initSwipeOff';
