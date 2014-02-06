@@ -6,7 +6,7 @@ phpwcms jQuery Cycle Plugin
 
 **phpwcms** jQuery Cycle Plugin is a flexible slider solution based on a custom template for Content Part **Images \<div\>**. jQuery Cycle Plugin is one of the best and most flexible jQuery Slider scripts.
 
-Copyright © 2013 Oliver Georgi — oliver@phpwcms.de
+Copyright © 2013-2014 Oliver Georgi — oliver@phpwcms.de
 
 
 ### Installation
@@ -51,9 +51,11 @@ Have a bug? Please create an [issue](https://github.com/slackero/phpwcms-extende
 This little enhancement for phpwcms would not be possible without:
 
 - **[jQuery Cycle Plugin](http://jquery.malsup.com/cycle/)** Copyright © 2007-2013 M. Alsup
-- **[jQuery](http://jquery.org/)** Copyright © 2005, 2013 jQuery Foundation, Inc.
+- **[jQuery](http://jquery.org/)** Copyright © 2005, 2014 jQuery Foundation, Inc.
 
 
 ### Changelog
 
-…
+#### 2014-02-06
+— Handle custom options earlier  
+— slideExpr is customizable

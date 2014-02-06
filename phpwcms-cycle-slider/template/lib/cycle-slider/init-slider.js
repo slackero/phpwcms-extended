@@ -39,14 +39,15 @@ $(function(){
 			
 			var $sliderIndex		= index;
 			var $thisSlider			= $(this);
-			var $sliderItems		= $('.slider-item', $thisSlider);
 			var $thisSliderOptions	= $sliderOptions;
 			var $dataOptions		= $thisSlider.data('options');
 			var $thumbnails			= [];
-		
+
 			if($.type($dataOptions) === 'object') {
 				$.extend($thisSliderOptions, $dataOptions);	
-			}
+			}			
+
+			var $sliderItems		= $($thisSliderOptions.cycleOptions.slideExpr, $thisSlider);
 		
 			if($thisSliderOptions.autoSizeImage || $thisSliderOptions.paginateMode == 'thumbnail') {
 			
@@ -112,9 +113,7 @@ $(function(){
 				}
 				
 				$thisSlider.cycle($thisSliderOptions.cycleOptions);
-
 			}
-			
 		});
 	}
 });
