@@ -185,7 +185,12 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 							'image_detail_more_lightbox'=> false,
 							'files_direct_download'		=> false,
 							'files_template'			=> '', // default
-							'on_request_trigger'		=> -999
+							'on_request_trigger'		=> -999,
+							'pagetitle_productname'		=> '%s',
+							'pagetitle_model'			=> ', Model: %s',
+							'pagetitle_add'				=> '%S- %s',
+							'pagetitle_ordernumber'		=> '%S(Order No. %s)',
+							'pagetitle'					=> '%1$s%2$s%3$s%4$s'
 						),	$_tmpl['config'] );
 
 	foreach( array( 'shop_pref_currency', 'shop_pref_unit_weight', 'shop_pref_vat', 'shop_pref_email_to',
@@ -202,19 +207,19 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 	}
 
 	if(!is_intval($_tmpl['config']['shop_url']) && is_string($_tmpl['config']['shop_url'])) {
-		$_tmpl['config']['shop_url']	= trim($_tmpl['config']['shop_url']);
+		$_tmpl['config']['shop_url'] = trim($_tmpl['config']['shop_url']);
 	} elseif(is_intval($_tmpl['config']['shop_url']) && intval($_tmpl['config']['shop_url'])) {
-		$_tmpl['config']['shop_url']	= 'aid='.intval($_tmpl['config']['shop_url']);
+		$_tmpl['config']['shop_url'] = 'aid='.intval($_tmpl['config']['shop_url']);
 	} else {
-		$_tmpl['config']['shop_url']	= $aktion[1] ? 'aid='.$aktion[1] : 'id='.$aktion[0];
+		$_tmpl['config']['shop_url'] = $aktion[1] ? 'aid='.$aktion[1] : 'id='.$aktion[0];
 	}
 
 	if(!is_intval($_tmpl['config']['cart_url']) && is_string($_tmpl['config']['cart_url'])) {
-		$_tmpl['config']['cart_url']	= trim($_tmpl['config']['cart_url']);
+		$_tmpl['config']['cart_url'] = trim($_tmpl['config']['cart_url']);
 	} elseif(is_intval($_tmpl['config']['cart_url']) && intval($_tmpl['config']['cart_url'])) {
-		$_tmpl['config']['cart_url']	= 'aid='.intval($_tmpl['config']['cart_url']);
+		$_tmpl['config']['cart_url'] = 'aid='.intval($_tmpl['config']['cart_url']);
 	} else {
-		$_tmpl['config']['cart_url']	= $aktion[1] ? 'aid='.$aktion[1] : 'id='.$aktion[0];
+		$_tmpl['config']['cart_url'] = $aktion[1] ? 'aid='.$aktion[1] : 'id='.$aktion[0];
 	}
 
 	if($_tmpl['config']['shop_wrap']) {
@@ -339,7 +344,6 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 		// handle invoice address -> checkout
 
 		$_SESSION[CART_KEY]['step1'] = array(
-
 			'INV_FIRSTNAME'	=> isset($_POST['shop_inv_firstname']) ? clean_slweg($_POST['shop_inv_firstname']) : '',
 			'INV_NAME'		=> isset($_POST['shop_inv_name']) ? clean_slweg($_POST['shop_inv_name']) : '',
 			'INV_ADDRESS'	=> isset($_POST['shop_inv_address']) ? clean_slweg($_POST['shop_inv_address']) : '',
@@ -349,8 +353,7 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 			'INV_COUNTRY'	=> isset($_POST['shop_inv_country']) ? clean_slweg($_POST['shop_inv_country']) : '',
 			'EMAIL'			=> isset($_POST['shop_email']) ? clean_slweg($_POST['shop_email']) : '',
 			'PHONE'			=> isset($_POST['shop_phone']) ? clean_slweg($_POST['shop_phone']) : ''
-
-					);
+		);
 
 		// retrieve all custom field POST data
 		foreach($_tmpl['config']['shop_field'] as $key => $row) {
@@ -395,7 +398,6 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 			unset($_SESSION[CART_KEY]['error']['step1']);
 		}
 
-
 	} elseif( isset($_POST['shop_order_submit']) ) {
 
 		if(empty($_POST['shop_terms_agree'])) {
@@ -409,7 +411,6 @@ if( $_shop_load_cat !== false || $_shop_load_list !== false || $_shop_load_order
 		unset($_SESSION[CART_KEY]['error']['step2']);
 
 	}
-
 }
 
 
@@ -426,7 +427,6 @@ if( $_shop_load_cat !== false ) {
 	} else {
 		$shop_limited_cat = false;
 	}
-
 
 	$sql  = 'SELECT * FROM '.DB_PREPEND.'phpwcms_categories WHERE ';
 	$sql .= "cat_type='module_shop' AND cat_status=1 AND cat_pid=0 ";
@@ -525,12 +525,10 @@ if( $_shop_load_cat !== false ) {
 
 			$x++;
 		}
-
 	}
 
 	$shop_cat = count($shop_cat) ? implode(LF.'	', $shop_cat) : '';
 	$shop_cat_all = '';
-
 
 	if(empty($_tmpl['config']['cat_all_pos'])) {
 		// fallback for older templates
@@ -587,8 +585,7 @@ if( $_shop_load_list !== false ) {
 		}
 		$shop_cat_selected = intval($shop_cat_selected[0]);
 		if(!$shop_cat_selected) {
-			//$shop_cat_selected		= 'all';
-			$shop_subcat_selected	= 0;
+			$shop_subcat_selected = 0;
 		}
 	} else {
 		$shop_cat_selected		= intval($shop_cat_selected);
@@ -860,12 +857,23 @@ if( $_shop_load_list !== false ) {
 
 				$_tmpl['config']['mode']		= 'detail';
 				$_tmpl['config']['lightbox_id']	= '[product_'.$x.'_'.$shop_detail_id.']';
-				$shop_pagetitle					= $row['shopprod_name1'];
-				/*
-				if(!empty($row['shopprod_model'])) {
-					$shop_pagetitle .= ' / ' . $row['shopprod_model'];
+
+				if($row['shopprod_name2']) {
+					$row['shopprod_name2'] = sprintf(str_replace('%S', ' ', $_tmpl['config']['pagetitle_add']), $row['shopprod_name2']);
 				}
-				*/
+				if($row['shopprod_model']) {
+					$row['shopprod_model'] = sprintf(str_replace('%S', ' ', $_tmpl['config']['pagetitle_model']), $row['shopprod_model']);
+				}
+				if($row['shopprod_ordernumber']) {
+					$row['shopprod_ordernumber'] = sprintf(str_replace('%S', ' ', $_tmpl['config']['pagetitle_ordernumber']), $row['shopprod_ordernumber']);
+				}
+				$shop_pagetitle = sprintf(
+					$_tmpl['config']['pagetitle'],
+					sprintf(str_replace('%S', ' ', $_tmpl['config']['pagetitle_productname']), $row['shopprod_name1']),
+					$row['shopprod_name2'],
+					$row['shopprod_model'],
+					$row['shopprod_ordernumber']
+				);
 
 				// product detail
 				$entry[$x] = str_replace('{PRODUCT_DETAIL_LINK}', $shop_prod_detail, $entry[$x]);
@@ -876,6 +884,8 @@ if( $_shop_load_list !== false ) {
 				if(count($row['shopprod_var']['images'])) {
 
 					$row['shopprod_var']['img_count'] = 1;
+					$content['images']['shop'] = array();
+
 					foreach($row['shopprod_var']['images'] as $img_key => $img_vars) {
 						$img_vars['count'] = $row['shopprod_var']['img_count'];
 						if($_tmpl['config']['image_detail_more_start'] <= $row['shopprod_var']['img_count']) {
@@ -885,6 +895,12 @@ if( $_shop_load_list !== false ) {
 							$_prod_list_img[] = $img_vars;
 							$row['shopprod_var']['img_count']++;
 						}
+						$content['images']['shop'][] = array(
+							'id'	=> $row['shopprod_var']['images'][$img_key]['f_id'],
+							'name'	=> $row['shopprod_var']['images'][$img_key]['f_name'],
+							'hash'	=> $row['shopprod_var']['images'][$img_key]['f_hash'],
+							'ext'	=> $row['shopprod_var']['images'][$img_key]['f_ext']
+						);
 					}
 				}
 				$_prod_list_img = implode($_tmpl['image_space'], $_prod_list_img);
@@ -892,33 +908,41 @@ if( $_shop_load_list !== false ) {
 				// Files
 				$_prod_list_files = isset($row['shopprod_var']['files'][0]['f_id']) ? shop_files($row['shopprod_var']['files']) : '';
 
+				if($row['shopprod_description0']) {
+					$row['meta_description'] = $row['shopprod_description0'];
+				} elseif($row['shopprod_description1']) {
+					$row['meta_description'] = $row['shopprod_description1'];
+				} else {
+					$row['meta_description'] = '';
+				}
+
+				if($row['meta_description']) {
+					$row['meta_description'] = trim( strip_tags( strip_bbcode($row['meta_description']) ) );
+					$row['meta_description'] = getCleanSubString($row['meta_description'], 75, '', 'word');
+					$row['meta_description_rendered'] = true;
+				} else {
+					$row['meta_description_rendered'] = false;
+				}
+
 				if(!empty($row['shopprod_overwrite_meta'])) {
-					if($row['shopprod_name1']) {
-						$content["pagetitle"] = setPageTitle($content["pagetitle"], $article['cat'], $row['shopprod_name1']);
-						set_meta('og:title', $row['shopprod_name1'], 'property');
-					}
-					if($row['shopprod_description0']) {
-						$row['meta_description'] = $row['shopprod_description0'];
-					} elseif($row['shopprod_description1']) {
-						$row['meta_description'] = $row['shopprod_description1'];
-					} else {
-						$row['meta_description'] = '';
-					}
-					if($row['meta_description']) {
-						$row['meta_description'] = trim( strip_tags( strip_bbcode($row['meta_description']) ) );
-						$row['meta_description'] = getCleanSubString($row['meta_description'], 40, '', 'word');
+					$content["pagetitle"] = setPageTitle($content["pagetitle"], $article['cat'], $shop_pagetitle);
+					if($row['meta_description_rendered']) {
 						set_meta('description', $row['meta_description']);
-						set_meta('og:description', $row['meta_description'], 'property');
+					}
+				}
+
+				if($row['shopprod_opengraph']) {
+
+					$content['opengraph']['type'] = 'og:product';
+					$content['opengraph']['title'] = $shop_pagetitle;
+					$content['opengraph']['url'] = abs_url(array('shop_detail'=>$shop_detail_id), array('shop_cat', 'shop_cart', 'phpwcms_output_action', 'print', 'phpwcms-preview', 'unsubscribe', 'subscribe'));
+
+					if($row['meta_description_rendered']) {
+						$content['opengraph']['description'] = $row['meta_description'];
 					}
 
-					set_meta('og:type', 'og:product', 'property');
-					set_meta('og:url', abs_url(array('shop_detail'=>$shop_detail_id), array('shop_cat', 'shop_cart')),'property');
-
-					if(count($_prod_list_img)) {
-						set_meta('og:image', PHPWCMS_URL.'img/cmsimage.php/600x600x1/'.$row['shopprod_var']['images'][0]['f_hash'] . '.' . $row['shopprod_var']['images'][0]['f_ext'], 'property');
-						$block['custom_htmlhead']['image_src'] = '  <link rel="image_src" href="'.PHPWCMS_URL.'img/cmsimage.php/600x600x1/'.$row['shopprod_var']['images'][0]['f_hash'] . '.' . $row['shopprod_var']['images'][0]['f_ext'].'" />';
-					}
-
+				} else {
+					$content['opengraph']['support'] = false;
 				}
 
 				// Update product view count
