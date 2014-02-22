@@ -10,6 +10,13 @@ Copyright (c) 2013–2014 Oliver Georgi — oliver@phpwcms.de
 Changes
 -------
 
+#### 2013-07-22
+- New option to enable/disable Sozial Sharing
+- New template options to format page title
+- Optimized search
+- Database update check
+- Fixed templates
+
 #### 2013-07-02
 - New option to set shipping fees based on total price
 
