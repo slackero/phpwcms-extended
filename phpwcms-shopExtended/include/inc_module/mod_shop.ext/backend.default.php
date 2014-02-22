@@ -32,11 +32,35 @@ if (!defined('PHPWCMS_ROOT')) {
  */
 
 // first check if neccessary db exists
-if(isset($phpwcms['modules'][$module]['path']) && is_file($phpwcms['modules'][$module]['path'].'setup/setup.php')) {
-
-	include_once($phpwcms['modules'][$module]['path'].'setup/setup.php');
-
-} elseif(isset($phpwcms['modules'][$module]['path'])) {
+if(isset($phpwcms['modules'][$module]['path'])) {
+	
+	// Proof existence of necessary fields only once per Session
+	if(empty($_SESSION['shop_db_proof'])) {
+		$result = _dbQuery("SHOW TABLES LIKE '".DB_PREPEND."phpwcms_shop_products'");
+		if(!empty($result)) {
+			$result = _dbQuery("SHOW COLUMNS FROM ".DB_PREPEND."phpwcms_shop_products LIKE 'shopprod_special_price'");
+			if(!isset($result[0])) {
+				$result = _dbQuery("ALTER TABLE ".DB_PREPEND."phpwcms_shop_products ADD shopprod_special_price TEXT NOT NULL", 'ALTER');
+			}
+			$result = _dbQuery("SHOW COLUMNS FROM ".DB_PREPEND."phpwcms_shop_products LIKE 'shopprod_track_view'");
+			if(!isset($result[0])) {
+				$result = _dbQuery("ALTER TABLE ".DB_PREPEND."phpwcms_shop_products ADD shopprod_track_view INT(11) NOT NULL DEFAULT '0', ADD INDEX (shopprod_track_view)", 'ALTER');
+			}
+			$result = _dbQuery("SHOW COLUMNS FROM ".DB_PREPEND."phpwcms_shop_products LIKE 'shopprod_lang'");
+			if(!isset($result[0])) {
+				$result = _dbQuery("ALTER TABLE ".DB_PREPEND."phpwcms_shop_products ADD shopprod_lang VARCHAR(255) NOT NULL DEFAULT '', ADD INDEX (shopprod_lang)", 'ALTER');
+			}
+			$result = _dbQuery("SHOW COLUMNS FROM ".DB_PREPEND."phpwcms_shop_products LIKE 'shopprod_overwrite_meta'");
+			if(!isset($result[0])) {
+				$result = _dbQuery("ALTER TABLE ".DB_PREPEND."phpwcms_shop_products ADD shopprod_overwrite_meta INT(1) NOT NULL DEFAULT '1'", 'ALTER');
+			}
+			$result = _dbQuery("SHOW COLUMNS FROM `".DB_PREPEND."phpwcms_shop_products` WHERE Field='shopprod_opengraph'");
+			if(!isset($result[0])) {
+				$insert = _dbQuery("ALTER TABLE `".DB_PREPEND."phpwcms_shop_products` ADD `shopprod_opengraph` INT(1) UNSIGNED NOT NULL DEFAULT '1', ADD INDEX (`shopprod_opengraph`)", 'ALTER');
+			}
+		}
+		$_SESSION['shop_db_proof'] = true;
+	}
 
 	// module default stuff
 	$plugin = array();
