@@ -4,11 +4,14 @@ phpwcms-shopExtended
 This is an enhanced version of the shop module that comes with phpwcms core package. It fixes the missing options selector like size, color etc.
 
 Copyright (c) 2012 wr  
-Copyright (c) 2013–2014 Oliver Georgi — oliver@phpwcms.de
+Copyright (c) 2013–2015 Oliver Georgi <og@phpwcms.org>
 
 
 Changes
 -------
+
+#### 2015-02-02
+– phpwcms Shop Extended replaces the [default shop module](https://github.com/slackero/phpwcms/tree/master/include/inc_module/mod_shop)
 
 #### 2013-07-22
 - New option to enable/disable Sozial Sharing

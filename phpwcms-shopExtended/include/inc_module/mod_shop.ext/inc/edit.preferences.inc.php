@@ -3,7 +3,7 @@
  * phpwcms content management system
  *
  * @author Oliver Georgi <oliver@phpwcms.de>
- * @copyright Copyright (c) 2002-2014, Oliver Georgi
+ * @copyright Copyright (c) 2002-2015, Oliver Georgi
  * @license http://opensource.org/licenses/GPL-2.0 GNU GPL-2
  * @link http://www.phpwcms.de
  *
@@ -112,42 +112,48 @@ if (!defined('PHPWCMS_ROOT')) {
 		<td><table cellpadding="0" cellspacing="0" border="0" summary="">
 
 			<tr>
-				<td class="chatlist">
-					<input type="radio" name="pref_shipping_calc" value="0"<?php is_checked(0, empty($plugin['data']['shop_pref_shipping_calc']) ? 0 : 1) ?> onchange="enableSubmit();" />
+				<td class="chatlist valign-middle">
+					<input type="radio" name="pref_shipping_calc" value="0"<?php is_checked(0, $plugin['data']['shop_pref_shipping_calc']) ?> onchange="enableSubmit();" />
 					<?php echo $BLM['shopprod_weight'].', '.$BLM['shopprod_weight_max'] ?>&nbsp;
 				</td>
-				<td class="chatlist"><?php echo $BLM['shopprod_net'] ?>&nbsp;</td>
-				<td class="chatlist"><?php echo $BLM['shopprod_vat'] ?> %</td>
+				<td class="chatlist valign-middle tdtop4 right"><?php echo $BLM['shopprod_net'] ?>&nbsp;</td>
+				<td class="chatlist valign-middle tdtop4 right"><?php echo $BLM['shopprod_vat'] ?> %&nbsp;</td>
+				<td></td>
 			</tr>
 <?php
 	for( $x = 0; $x <= 4; $x++ ) {
+
+		// Be sure to have set all default values
+		$plugin['data']['shop_pref_shipping'][$x] = array_merge($_checkPref['shop_pref_shipping'][$x], $plugin['data']['shop_pref_shipping'][$x]);
 
 		echo '
 			<tr>
 				<td class="tdtop3"><input name="pref_shipping_weight['.$x.']" type="text" class="v12 width100" value="' .
 				html_specialchars( @number_format($plugin['data']['shop_pref_shipping'][$x]['weight'], 3, $BLM['dec_point'], $BLM['thousands_sep'] ) ) .
 				'" size="10" maxlength="10" onchange="enableSubmit();" />&nbsp;</td>
-				<td class="tdtop3"><input name="pref_shipping_net['.$x.']" type="text" class="v12 width100" value="' .
-				html_specialchars( @number_format($plugin['data']['shop_pref_shipping'][$x]['net'], 3, $BLM['dec_point'], $BLM['thousands_sep'] ) ) .
+				<td class="tdtop3"><input name="pref_shipping_net['.$x.']" type="text" class="v12 width60 right" value="' .
+				html_specialchars( @number_format($plugin['data']['shop_pref_shipping'][$x]['net'], 2, $BLM['dec_point'], $BLM['thousands_sep'] ) ) .
 				'" size="10" maxlength="10" onchange="enableSubmit();" />&nbsp;</td>
-				<td class="tdtop3"><input name="pref_shipping_vat['.$x.']" type="text" class="v12 width100" value="' .
+				<td class="tdtop3"><input name="pref_shipping_vat['.$x.']" type="text" class="v12 width60 right" value="' .
 				html_specialchars( @number_format($plugin['data']['shop_pref_shipping'][$x]['vat'], 2, $BLM['dec_point'], $BLM['thousands_sep'] ) ) .
 				'" size="10" maxlength="10" onchange="enableSubmit();" /></td>
+				<td></td>
 			</tr>
 			';
 	}
 ?>
 			<tr>
-				<td colspan="3" class="tdtop5"></td>
+				<td colspan="4" class="tdtop5"></td>
 			</tr>
 
 			<tr>
-				<td class="chatlist">
-					<input type="radio" name="pref_shipping_calc" value="1"<?php is_checked(1, empty($plugin['data']['shop_pref_shipping_calc']) ? 0 : 1) ?> onchange="enableSubmit();" />
+				<td class="chatlist valign-middle">
+					<input type="radio" name="pref_shipping_calc" value="1"<?php is_checked(1, $plugin['data']['shop_pref_shipping_calc']) ?> onchange="enableSubmit();" />
 					<?php echo $BLM['shopprod_price'].', '.$BLM['shopprod_net'] ?>&nbsp;
 				</td>
-				<td class="chatlist tdtop5"><?php echo $BLM['shopprod_net'] ?>&nbsp;</td>
-				<td class="chatlist tdtop5"><?php echo $BLM['shopprod_vat'] ?> %</td>
+				<td class="chatlist valign-middle tdtop4 right"><?php echo $BLM['shopprod_net'] ?>&nbsp;</td>
+				<td class="chatlist valign-middle tdtop4 right"><?php echo $BLM['shopprod_vat'] ?> %&nbsp;</td>
+				<td></td>
 			</tr>
 
 <?php
@@ -158,12 +164,51 @@ if (!defined('PHPWCMS_ROOT')) {
 				<td class="tdtop3"><input name="pref_shipping_price['.$x.']" type="text" class="v12 width100" value="' .
 				html_specialchars( @number_format($plugin['data']['shop_pref_shipping'][$x]['price'], 2, $BLM['dec_point'], $BLM['thousands_sep'] ) ) .
 				'" size="10" maxlength="10" onchange="enableSubmit();" />&nbsp;</td>
-				<td class="tdtop3"><input name="pref_shipping_price_net['.$x.']" type="text" class="v12 width100" value="' .
+				<td class="tdtop3"><input name="pref_shipping_price_net['.$x.']" type="text" class="v12 width60 right" value="' .
 				html_specialchars( @number_format($plugin['data']['shop_pref_shipping'][$x]['price_net'], 2, $BLM['dec_point'], $BLM['thousands_sep'] ) ) .
 				'" size="10" maxlength="10" onchange="enableSubmit();" />&nbsp;</td>
-				<td class="tdtop3"><input name="pref_shipping_price_vat['.$x.']" type="text" class="v12 width100" value="' .
+				<td class="tdtop3"><input name="pref_shipping_price_vat['.$x.']" type="text" class="v12 width60 right" value="' .
 				html_specialchars( @number_format($plugin['data']['shop_pref_shipping'][$x]['price_vat'], 2, $BLM['dec_point'], $BLM['thousands_sep'] ) ) .
 				'" size="10" maxlength="10" onchange="enableSubmit();" /></td>
+				<td></td>
+			</tr>
+			';
+
+	}
+?>
+
+			<tr>
+				<td colspan="4" class="tdtop5"></td>
+			</tr>
+
+			<tr>
+				<td class="chatlist valign-middle">
+					<input type="radio" name="pref_shipping_calc" value="2"<?php is_checked(2, $plugin['data']['shop_pref_shipping_calc']) ?> onchange="enableSubmit();" />
+					<?php echo $BLM['shopprod_distance'] ?>&nbsp;
+				</td>
+				<td class="chatlist valign-middle tdtop4 right"><?php echo $BLM['shopprod_net'] ?>&nbsp;</td>
+				<td class="chatlist valign-middle tdtop4 right"><?php echo $BLM['shopprod_vat'] ?> %&nbsp;</td>
+				<td class="chatlist valign-middle tdtop4"><?php echo $BL['be_title'] ?></td>
+			</tr>
+
+
+<?php
+	for( $x = 0; $x <= 4; $x++ ) {
+
+		echo '
+			<tr>
+				<td class="tdtop3"><input name="pref_shipping_zone['.$x.']" type="text" class="v12 width100 km" value="' .
+				$plugin['data']['shop_pref_shipping'][$x]['zone'] .
+				'" size="10" maxlength="10" onchange="enableSubmit();" />&nbsp;</td>
+				<td class="tdtop3"><input name="pref_shipping_zone_net['.$x.']" type="text" class="v12 width60 right" value="' .
+				html_specialchars( @number_format($plugin['data']['shop_pref_shipping'][$x]['zone_net'], 2, $BLM['dec_point'], $BLM['thousands_sep'] ) ) .
+				'" size="10" maxlength="10" onchange="enableSubmit();" />&nbsp;</td>
+				<td class="tdtop3"><input name="pref_shipping_zone_vat['.$x.']" type="text" class="v12 width60 right" value="' .
+				html_specialchars( @number_format($plugin['data']['shop_pref_shipping'][$x]['zone_vat'], 2, $BLM['dec_point'], $BLM['thousands_sep'] ) ) .
+				'" size="10" maxlength="10" onchange="enableSubmit();" />&nbsp;</td>
+				<td class="tdtop3"><input name="pref_shipping_zone_label['.$x.']" type="text" class="v12 width125" value="' .
+				html_specialchars($plugin['data']['shop_pref_shipping'][$x]['zone_label']) .
+				'" size="10" maxlength="100" onchange="enableSubmit();" /></td>
 			</tr>
 			';
 
@@ -171,6 +216,13 @@ if (!defined('PHPWCMS_ROOT')) {
 ?>
 
 			</table></td>
+	</tr>
+
+	<tr><td colspan="2"><img src="img/leer.gif" alt="" width="1" height="5" /></td></tr>
+
+	<tr>
+		<td align="right" class="chatlist"><?php echo $BLM['shopprod_distance_base'] ?>:&nbsp;</td>
+		<td><input name="pref_zone_base" type="text" id="pref_zone_base" class="v12 width375" value="<?php echo html_specialchars($plugin['data']['shop_pref_zone_base']) ?>" size="30" maxlength="200" onchange="enableSubmit();" /></td>
 	</tr>
 
 	<tr><td colspan="2"><img src="img/leer.gif" alt="" width="1" height="10" /></td></tr>

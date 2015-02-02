@@ -3,7 +3,7 @@
  * phpwcms content management system
  *
  * @author Oliver Georgi <oliver@phpwcms.de>
- * @copyright Copyright (c) 2002-2014, Oliver Georgi
+ * @copyright Copyright (c) 2002-2015, Oliver Georgi
  * @license http://opensource.org/licenses/GPL-2.0 GNU GPL-2
  * @link http://www.phpwcms.de
  *
@@ -38,7 +38,7 @@ $row_count = 0;
 
 $BLM['shopprod_payby_INVOICE'] = $BLM['shopprod_payby_onbill'];        
 
-$sql  = "SELECT *, DATE_FORMAT(order_date,'%e.%m.%y') AS order_fdate FROM ".DB_PREPEND."phpwcms_shop_orders WHERE ";
+$sql  = "SELECT *, DATE_FORMAT(order_date,'%d.%m.%Y') AS order_fdate FROM ".DB_PREPEND."phpwcms_shop_orders WHERE ";
 $sql .= "order_status NOT IN ('ARCHIVED', 'CLOSED') ORDER BY order_date DESC";
 
 $data = _dbQuery($sql);
@@ -55,7 +55,7 @@ foreach($data as $row) {
 	echo '<img src="img/famfamfam/cart_go.gif" alt="'.$BLM['shop_order'].'" border="0" />';
 	echo '</a></td>'.LF;
 
-	echo '<td class="dir" width="13%">';
+	echo '<td class="dir nowrap" width="13%">';
 
 	if(SHOP_FELANG_SUPPORT) {
 		$row['order_data']		= @unserialize($row['order_data']);
@@ -64,19 +64,17 @@ foreach($data as $row) {
 	}
 	
 	echo html_specialchars($row['order_number'])."&nbsp;</td>\n";
-	echo '<td class="dir" width="13%">&nbsp;'.html_specialchars($row['order_fdate'])."&nbsp;</td>\n";
-	echo '<td class="dir" width="50%">&nbsp;<a href="mailto:'.$row['order_email'].'?subject='.rawurlencode($BLM['shopprod_order_subject'].' #'.$row['order_number']).'">';
+	echo '<td class="dir" align="right" width="13%">&nbsp;'.html_specialchars($row['order_fdate'])."&nbsp;</td>\n";
+	echo '<td class="dir nowrap" width="50%">&nbsp;<a href="mailto:'.$row['order_email'].'?subject='.rawurlencode($BLM['shopprod_order_subject'].' #'.$row['order_number']).'">';
 	echo html_specialchars($row['order_firstname'].' '.$row['order_name'])."</a>&nbsp;</td>\n";
 	
 	echo '<td class="dir listNumber" width="10%">'.html_specialchars( number_format( round($row['order_net'], 2) , 2, $BLM['dec_point'], $BLM['thousands_sep'] ) )."&nbsp;</td>\n";
 	echo '<td class="dir listNumber" width="10%">'.html_specialchars( number_format( round($row['order_gross'], 2) , 2, $BLM['dec_point'], $BLM['thousands_sep'] ) )."&nbsp;</td>\n";
-
-	echo '<td class="dir" width="10%">'.html_specialchars($BLM[ 'shopprod_payby_'.$row['order_payment'] ])."&nbsp;&nbsp;</td>\n";
+	echo '<td class="dir" width="10%">'.(empty($row['order_payment']) ? '-' : html_specialchars($BLM[ 'shopprod_payby_'.$row['order_payment'] ]))."&nbsp;&nbsp;</td>\n";
 	
-	echo '<td width="5%" align="right" nowrap="nowrap" class="button_td">';
+	echo '<td width="5%" align="right" class="button_td nowrap">';
 	
-		echo '<a href="'.$_controller_link.'&amp;delete='.$row["order_id"];
-		echo '" title="delete: '.html_specialchars($row['order_number']).'"';
+		echo '<a href="'.$_controller_link.'&amp;delete='.$row["order_id"].'" title="'.$BL['be_cnt_delete'].': '.html($row['order_number']).'"';
 		echo ' onclick="return confirm(\''.$BLM['delete_order'].js_singlequote($row['order_number']).'\');">';
 		echo '<img src="img/button/trash_13x13_1.gif" border="0" alt="" /></a>';
 	

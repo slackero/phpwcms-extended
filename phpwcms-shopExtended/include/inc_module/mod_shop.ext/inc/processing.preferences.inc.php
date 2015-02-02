@@ -3,7 +3,7 @@
  * phpwcms content management system
  *
  * @author Oliver Georgi <oliver@phpwcms.de>
- * @copyright Copyright (c) 2002-2014, Oliver Georgi
+ * @copyright Copyright (c) 2002-2015, Oliver Georgi
  * @license http://opensource.org/licenses/GPL-2.0 GNU GPL-2
  * @link http://www.phpwcms.de
  *
@@ -44,7 +44,12 @@ if($action == 'edit') {
 		$plugin['data']['shop_pref_email_from']			= clean_slweg($_POST['pref_email_from']);
 		$plugin['data']['shop_pref_email_paypal']		= clean_slweg($_POST['pref_email_paypal']);
 
-		$plugin['data']['shop_pref_shipping_calc']		= empty($_POST['pref_shipping_calc']) ? 0 : 1;
+		$plugin['data']['shop_pref_shipping_calc']		= empty($_POST['pref_shipping_calc']) ? 0 : abs(intval($_POST['pref_shipping_calc']));
+		if($plugin['data']['shop_pref_shipping_calc'] > 2) {
+			$plugin['data']['shop_pref_shipping_calc'] = 2;
+		}
+
+		$plugin['data']['shop_pref_zone_base']			= clean_slweg($_POST['pref_zone_base']);
 
 		// check if multiple emails
 		foreach( $plugin['data']['shop_pref_email_to'] as $key => $value ) {
@@ -86,6 +91,20 @@ if($action == 'edit') {
 
 			$plugin['data']['shop_pref_shipping'][$x]['price_vat']	= str_replace($BLM['thousands_sep'], '', $plugin['data']['shop_pref_shipping'][$x]['price_vat']);
 			$plugin['data']['shop_pref_shipping'][$x]['price_vat']	= round(str_replace($BLM['dec_point'], '.', $plugin['data']['shop_pref_shipping'][$x]['price_vat']), 2);
+
+			// Zone based
+			$plugin['data']['shop_pref_shipping'][$x]['zone']		= intval($_POST['pref_shipping_zone'][$x]);
+			$plugin['data']['shop_pref_shipping'][$x]['zone_net']	= clean_slweg($_POST['pref_shipping_zone_net'][$x]);
+			$plugin['data']['shop_pref_shipping'][$x]['zone_vat']	= clean_slweg($_POST['pref_shipping_zone_vat'][$x]);
+			$plugin['data']['shop_pref_shipping'][$x]['zone_label']	= clean_slweg($_POST['pref_shipping_zone_label'][$x]);
+
+			$plugin['data']['shop_pref_shipping'][$x]['zone']		= empty($plugin['data']['shop_pref_shipping'][$x]['zone']) ? '' : intval($plugin['data']['shop_pref_shipping'][$x]['zone']);
+
+			$plugin['data']['shop_pref_shipping'][$x]['zone_net']	= str_replace($BLM['thousands_sep'], '', $plugin['data']['shop_pref_shipping'][$x]['zone_net']);
+			$plugin['data']['shop_pref_shipping'][$x]['zone_net']	= round(str_replace($BLM['dec_point'], '.', $plugin['data']['shop_pref_shipping'][$x]['zone_net']), 3);
+
+			$plugin['data']['shop_pref_shipping'][$x]['zone_vat']	= str_replace($BLM['thousands_sep'], '', $plugin['data']['shop_pref_shipping'][$x]['zone_vat']);
+			$plugin['data']['shop_pref_shipping'][$x]['zone_vat']	= round(str_replace($BLM['dec_point'], '.', $plugin['data']['shop_pref_shipping'][$x]['zone_vat']), 2);
 		}
 
 		$plugin['data']['shop_pref_payment'] = array(
@@ -161,12 +180,25 @@ if($action == 'edit') {
 			_setConfig('shop_pref_discount',		$plugin['data']['shop_pref_discount'],		'module_shop');
 			_setConfig('shop_pref_loworder',		$plugin['data']['shop_pref_loworder'],		'module_shop');
 			_setConfig('shop_pref_felang',			$plugin['data']['shop_pref_felang'],		'module_shop');
+			_setConfig('shop_pref_zone_base',		$plugin['data']['shop_pref_zone_base'],		'module_shop');
 
 			// save and back to listing mode
 			headerRedirect( shop_url('controller=pref', '') );
 		}
 	}
 
+	$_checkPref_shipping_default = array(
+		'weight' => '',
+		'net' => 0,
+		'vat' => 0,
+		'price' => '',
+		'price_net' => 0,
+		'price_vat' => 0,
+		'zone' => '',
+		'zone_net' => 0,
+		'zone_vat' => 0,
+		'zone_label' => ''
+	);
 	$_checkPref = array(
 		'shop_pref_currency'		=>	'',
 		'shop_pref_unit_weight'		=>	'kg',
@@ -179,12 +211,13 @@ if($action == 'edit') {
 		'shop_pref_felang'			=>	0,
 		'shop_pref_shipping_calc'	=>	0,
 		'shop_pref_shipping'		=>	array(
-			0 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0),
-			1 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0),
-			2 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0),
-			3 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0),
-			4 => array('weight'=>'', 'net'=>0, 'vat'=>0, 'price'=>'', 'price_net'=>0, 'price_vat'=>0)
+			0 => $_checkPref_shipping_default,
+			1 => $_checkPref_shipping_default,
+			2 => $_checkPref_shipping_default,
+			3 => $_checkPref_shipping_default,
+			4 => $_checkPref_shipping_default
 		),
+		'shop_pref_zone_base'		=>	'',
 		'shop_pref_payment'			=>	array(
 			'paypal' => 1,
 			'prepay'=> 1,
