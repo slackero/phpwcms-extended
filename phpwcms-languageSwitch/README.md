@@ -32,8 +32,8 @@ The **alias** — article or structure level or news – will be used to detect 
 
 - `{lang}`**/**alias
 - alias**/**`{lang}`
-- `{lang}`**/**alias
-- alias**/**`{lang}`
+- `{lang}`**_**alias
+- alias**_**`{lang}`
 
 So the best is to think twice before you start structuring your site content.
 
@@ -43,7 +43,7 @@ Keep in mind:
 
 There is no support for _translated_ alias at the moment. I recommend to target your main audience and take the default language to name the lead alias and get better SEO results.
 
-If no matching content can be detected the matching algorithm try to match the parent node and so on.
+If no matching content can be detected the matching algorithm is trying to match the parent node and so on.
 
 
 Replacer:
@@ -51,7 +51,7 @@ Replacer:
 
 There are several options to use a unique template for all languages. Here are the main replacement tags.
 
-- [`{lang}`]foo[/`{lang}`] (case insensitive),  
+- `[{lang}]`foo`[/{lang}]` (case insensitive),  
 [en]This is English[/en][de]Das ist Deutsch[/de]
 - `@@Default@@`: check `template/template_lang/` after first parsing
 - `{SWITCH_LANG}`: is replaced by the language switch
