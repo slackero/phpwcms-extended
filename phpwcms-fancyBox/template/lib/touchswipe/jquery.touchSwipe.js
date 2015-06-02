@@ -1,6 +1,6 @@
 /*
 * @fileOverview TouchSwipe - jQuery Plugin
-* @version 1.6.7
+* @version 1.6.8
 *
 * @author Matt Bryson http://www.github.com/mattbryson
 * @see https://github.com/mattbryson/TouchSwipe-Jquery-Plugin
@@ -99,6 +99,10 @@
 *
 * $Date: 2015-22-01 (Thurs, 22 Jan 2015) $
 * $version 1.6.7    - Added patch from https://github.com/mattbryson/TouchSwipe-Jquery-Plugin/issues/206 to fix memory leak
+*
+* $Date: 2015-2-2 (Mon, 2 Feb 2015) $
+* $version 1.6.8    - Added preventDefaultEvents option to proxy events regardless.
+*					- Fixed issue with swipe and pinch not triggering at the same time
 */
 
 /**
@@ -206,6 +210,7 @@
 										<code>"vertical"</code> : will force page to scroll on vertical swipes. <br/>
 	* @property {boolean} [fallbackToMouseEvents=true] If true mouse events are used when run on a non touch device, false will stop swipes being triggered by mouse events on non tocuh devices. 
 	* @property {string} [excludedElements="button, input, select, textarea, a, .noSwipe"] A jquery selector that specifies child elements that do NOT trigger swipes. By default this excludes all form, input, select, button, anchor and .noSwipe elements. 
+	* @property {boolean} [preventDefaultEvents=true] by default default events are cancelled, so the page doesn't move.  You can dissable this so both native events fire as well as your handlers. 
 	
 	*/
 	var defaults = {
@@ -235,7 +240,8 @@
 		triggerOnTouchLeave:false, 
 		allowPageScroll: "auto", 
 		fallbackToMouseEvents: true,	
-		excludedElements:"label, button, input, select, textarea, a, .noSwipe"
+		excludedElements:"label, button, input, select, textarea, a, .noSwipe",
+		preventDefaultEvents:true
 	};
 
 
@@ -559,7 +565,7 @@
 				// get the total number of fingers touching the screen
 				fingerCount = event.touches.length;
 			}
-			//Else this is the desktop, so stop the browser from dragging the image
+			//Else this is the desktop, so stop the browser from dragging content
 			else {
 				jqEvent.preventDefault(); //call this on jq event so we are cross browser
 			}
@@ -683,6 +689,8 @@
 			}
 			
 			
+			
+
 			if ( (fingerCount === options.fingers || options.fingers === ALL_FINGERS) || !SUPPORTS_TOUCH || hasPinches() ) {
 				
 				direction = calculateDirection(currentFinger.start, currentFinger.end);
@@ -899,34 +907,38 @@
 			
 			var ret = undefined;
 			
-			// SWIPE GESTURES
-			if(didSwipe() || hasSwipes()) { //hasSwipes as status needs to fire even if swipe is invalid
-				//Trigger the swipe events...
-				ret = triggerHandlerForGesture(event, phase, SWIPE);
-			} 
-			
-			// PINCH GESTURES (if the above didn't cancel)
-			else if((didPinch() || hasPinches()) && ret!==false) {
-				//Trigger the pinch events...
-				ret = triggerHandlerForGesture(event, phase, PINCH);
-			}
-			
-			// CLICK / TAP (if the above didn't cancel)
-			if(didDoubleTap() && ret!==false) {
-				//Trigger the tap events...
-				ret = triggerHandlerForGesture(event, phase, DOUBLE_TAP);
-			}
-			
-			// CLICK / TAP (if the above didn't cancel)
-			else if(didLongTap() && ret!==false) {
-				//Trigger the tap events...
-				ret = triggerHandlerForGesture(event, phase, LONG_TAP);
-			}
+			//Swipes and pinches are not mutually exclusive - can happend at same time, so need to trigger 2 events potentially
+			if( (didSwipe() || hasSwipes()) || (didPinch() || hasPinches()) ) {
+				// SWIPE GESTURES
+				if(didSwipe() || hasSwipes()) { //hasSwipes as status needs to fire even if swipe is invalid
+					//Trigger the swipe events...
+					ret = triggerHandlerForGesture(event, phase, SWIPE);
+				}	
 
-			// CLICK / TAP (if the above didn't cancel)
-			else if(didTap() && ret!==false) {
-				//Trigger the tap event..
-				ret = triggerHandlerForGesture(event, phase, TAP);
+				// PINCH GESTURES (if the above didn't cancel)
+				if((didPinch() || hasPinches()) && ret!==false) {
+					//Trigger the pinch events...
+					ret = triggerHandlerForGesture(event, phase, PINCH);
+				}
+			} else {
+			 
+				// CLICK / TAP (if the above didn't cancel)
+				if(didDoubleTap() && ret!==false) {
+					//Trigger the tap events...
+					ret = triggerHandlerForGesture(event, phase, DOUBLE_TAP);
+				}
+				
+				// CLICK / TAP (if the above didn't cancel)
+				else if(didLongTap() && ret!==false) {
+					//Trigger the tap events...
+					ret = triggerHandlerForGesture(event, phase, LONG_TAP);
+				}
+
+				// CLICK / TAP (if the above didn't cancel)
+				else if(didTap() && ret!==false) {
+					//Trigger the tap event..
+					ret = triggerHandlerForGesture(event, phase, TAP);
+				}
 			}
 			
 			
@@ -1235,6 +1247,7 @@
 			return result;
 		}
 
+	
 
 		/**
 		* Checks direction of the swipe and the value allowPageScroll to see if we should allow or prevent the default behaviour from occurring.
@@ -1245,7 +1258,13 @@
 		* @inner
 		*/
 		function validateDefaultEvent(jqEvent, direction) {
-			if (options.allowPageScroll === NONE || hasPinches()) {
+
+			
+			if( options.preventDefaultEvents === false ) {
+				return;
+			}
+
+			if (options.allowPageScroll === NONE) {
 				jqEvent.preventDefault();
 			} else {
 				var auto = options.allowPageScroll === AUTO;
