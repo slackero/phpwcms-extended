@@ -176,6 +176,12 @@ if(is_array($phpwcms['allowed_lang']) && count($phpwcms['allowed_lang']) > 1) {
 
 }
 
+
+// Search and Replace
+$content['pagetitle'] = str_replace($content_search, $content_replace, $content['pagetitle']);
+$content["pagetitle"] = strip_tags(preg_replace($content_search_regexp, $content_replace_regexp, $content["pagetitle"]));
+
 $content['all'] = str_replace($content_search, $content_replace, $content['all']);
+$content['all'] = preg_replace($content_search_regexp, $content_replace_regexp, $content['all']);
 
 ?>
