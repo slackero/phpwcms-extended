@@ -3,26 +3,25 @@ phpwcms-fancyBox
 
 **phpwcms** jQuery FancyBox is a replacement of the default Lightbox (SlimBox) integration enhanced by with Swipe support for touch devices. Swipe support options are enabled  when more than one fancyBox item is detected only.
 
-Copyright (c) 2012-2014 Oliver Georgi — oliver@phpwcms.de
+Copyright (c) 2012-2016 Oliver Georgi — <og@phpwcms.org>
 
 
 ### Components
 
-**fancyBox** is a tool that offers a nice and elegant way to add zooming functionality for images, html content and multi-media on your webpages. Check [license](http://www.fancyapps.com/fancybox/#license). Copyright (c) 2012 Janis Skarnelis - janis@fancyapps.com
+**fancyBox** is a tool that offers a nice and elegant way to add zooming functionality for images, html content and multi-media on your webpages. http://www.fancyapps.com/fancybox/
 
-**TouchSwipe** is a jquery plugin to be used with jQuery on touch input devices such as iPad, iPhone etc.
-
+**TouchSwipe** is a jquery plugin to be used with jQuery on touch input devices such as iPad, iPhone etc. http://labs.rampinteractive.co.uk/touchSwipe/
 
 ---
 
 ### Installation
 
-Download related files and place content of folder **template** into the template folder of your **phpwcms** installation.
+Download related files and place the content of the folder **template** into the template folder of your **phpwcms** installation.
 
 
 ### Requires
 
-phpwcms with jQuery support Version 1.6 or newer.
+phpwcms with jQuery support Version 1.6 (recommend jQuery 1.12.4) or newer.
 
 
 ### Configuration
@@ -41,17 +40,22 @@ There you can change or add the options as described in the [fancyBox documentat
 
 ### Bug tracker
 
-Have a bug? Please create an [issue](https://github.com/slackero/phpwcms-fancyBox/issues) on GitHub.
+Have a bug? Please create an [issue](https://github.com/slackero/phpwcms-extended/issues) on GitHub.
 
 
 ### Thanks
 
 That little enhancement for phpwcms would not be possible without:
 
-- **[fancyBox](http://fancyapps.com/fancybox)** Copyright (c) 2012 Janis Skarnelis - janis@fancyapps.com
-- **[TouchSwipe](http://labs.skinkers.com/touchSwipe/)** Copyright (c) 2010 Matt Bryson
+- **[fancyBox](http://fancyapps.com/fancybox)** Copyright (c) 2012 Janis Skarnelis - <janis@fancyapps.com>
+- **[TouchSwipe](http://labs.rampinteractive.co.uk/touchSwipe/)** Copyright (c) 2010-2015 Matt Bryson
 
 ### Changelog
+
+#### 29 Nov 2016
+- touchSwipe 1.6.18
+- FancyBox master taken (got some fixes)
+- optimized jquery.fancybox.initSwipeOn.js
 
 #### 6 Feb 2014
 - touchSwipe 1.6.5

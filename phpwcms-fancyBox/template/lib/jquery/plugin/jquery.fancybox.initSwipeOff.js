@@ -1,6 +1,6 @@
 /**
  * fancyBox without Swipe support for phpwcms
- * November 11, 2012, <oliver@phpwcms.de>
+ * November 29, 2016, <og@phpwcms.org>
  **/
 
 // initialize fancyBox with Swipe enabled
@@ -14,9 +14,9 @@ $(function() {
 	if(fancyBoxImagesCount) {
 		
 		fancyBoxImages.fancybox({
-				// openEffect	: 'none',
-				// closeEffect	: 'none'
-				type: 'image'
+			// openEffect	: 'none',
+			// closeEffect	: 'none'
+			type: 'image'
 		});
 
 	}
@@ -27,8 +27,8 @@ $(function() {
 	if(fancyBoxOthersCount) {
 
 		fancyBoxOthers.fancybox({
-				// openEffect	: 'none',
-				// closeEffect	: 'none'
+			// openEffect	: 'none',
+			// closeEffect	: 'none'
 		});
 	}
 

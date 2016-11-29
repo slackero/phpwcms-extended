@@ -1,6 +1,6 @@
 /**
- * fancyBox with Swipe support for phpwcms
- * November 11, 2012, <oliver@phpwcms.de>
+ * fancyBox without Swipe support for phpwcms
+ * November 29, 2016, <og@phpwcms.org>
  **/
 
 // initialize fancyBox with Swipe enabled
@@ -16,10 +16,16 @@ $(function() {
 	
 	if(fancyBoxImagesCount) {
 		
+		var fancyBoxOptions = {
+			// openEffect	: 'none',
+			// closeEffect	: 'none'
+			type: 'image'
+		};
+		
 		// more than 1 fancyBox Item means we enable Swipe support
 		if(hasTouch && fancyBoxImagesCount > 1) {
 			
-			var fancyBoxOptions = {
+			fancyBoxOptions = {
 				// openEffect	: 'none',
 				// closeEffect	: 'none',
 				closeBtn: false,
@@ -37,16 +43,6 @@ $(function() {
 					});
 				}
 			};
-		
-		// only 1 fancyBox Item means Swipe support not needed
-		} else {
-			
-			var fancyBoxOptions = {
-				// openEffect	: 'none',
-				// closeEffect	: 'none'
-				type: 'image'
-			};
-		
 		}
 		
 		fancyBoxImages.fancybox(fancyBoxOptions);
@@ -56,6 +52,12 @@ $(function() {
 	var fancyBoxOthersCount = fancyBoxOthers.length;
 	
 	if(fancyBoxOthersCount) {
+		
+		var fancyBoxOthersOptions = {
+			// openEffect	: 'none',
+			// closeEffect	: 'none'
+			//type: 'image'
+		};
 		
 		// more than 1 fancyBox Item means we enable Swipe support
 		if(hasTouch && fancyBoxImagesCount > 1) {
@@ -78,16 +80,6 @@ $(function() {
 					});
 				}
 			};
-		
-		// only 1 fancyBox Item means Swipe support not needed
-		} else {
-			
-			var fancyBoxOthersOptions = {
-				// openEffect	: 'none',
-				// closeEffect	: 'none'
-				//type: 'image'
-			};
-		
 		}
 		
 		fancyBoxOthers.fancybox(fancyBoxOthersOptions);
