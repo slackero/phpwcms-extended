@@ -21,7 +21,7 @@ Download related files and place the content of the folder **template** into the
 
 ### Requires
 
-phpwcms with jQuery support Version 1.6 (recommend jQuery 1.12.4) or newer.
+**phpwcms** with jQuery support Version 1.6 (recommend jQuery 1.12.4) or newer.
 
 
 ### Configuration
