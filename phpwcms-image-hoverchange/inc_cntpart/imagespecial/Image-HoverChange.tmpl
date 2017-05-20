@@ -1,0 +1,101 @@
+<!--IMAGE_SETTINGS_START//-->
+; this is formatted like WIN.INI
+; please: do not use comments for value lines
+; settings will overwrite CP settings
+width			= 300
+height			= 300
+width_zoom		= 300
+height_zoom		= 300
+col				= 9999
+space			= 0
+zoom			= 1
+lightbox		= 0
+;nocaption		= 0
+;thumb_class	= image-responsive
+; 0 = no center, 1 = horizontal/vertical, 2 = horizontal, 3 = vertical
+center			= 0
+crop			= 0
+crop_zoom		= 0
+;fx1			= 0
+;fx2			= 0
+;fx3			= 0
+; InfoText render: plain, html, markdown, textile
+text_render	= plain
+<!--IMAGE_SETTINGS_END//-->
+
+<!--IMAGES_HEADER_START//-->
+
+[TITLE]<h3>{TITLE}</h3>[/TITLE]
+[SUBTITLE]<h4>{SUBTITLE}</h4>[/SUBTITLE]
+[TEXT]{TEXT}[/TEXT]
+
+<div class="image-hover-collection">
+<!--IMAGES_HEADER_END//-->
+
+<!--IMAGES_ENTRY_START//-->
+	<div class="image-hover">
+		<figure style="background-image:url({IMAGE_REL});width:{THUMB_WIDTH}px;" class="image-hover-trigger">
+			<img src="{THUMB_REL}" alt="[ALT]{ALT}[/ALT]" width="{THUMB_WIDTH}" height="{THUMB_HEIGHT}">
+			[CAPTION]<figcaption>{CAPTION}</figcaption>[/CAPTION]
+		</figure>[INFOTEXT]
+		{INFOTEXT}
+		[/INFOTEXT][URL]
+		<p class="read-more">
+			<a href="{URL}"[URL_TARGET] target="{URL_TARGET}"[/URL_TARGET]>@@read more &raquo;@@</a>
+		</p>[/URL]
+	</div>
+<!--IMAGES_ENTRY_END//-->
+
+<!--IMAGES_ENTRY_SPACER_START//--><!--IMAGES_ENTRY_SPACER_END//-->
+
+<!--IMAGES_ROW_SPACER_START//--><!--IMAGES_ROW_SPACER_END//-->
+
+<!--IMAGES_FOOTER_START//-->
+</div>
+<!-- CSS:
+.image-hover-collection {
+
+}
+.image-hover-collection .image-hover {
+
+}
+.image-hover-collection .image-hover figure {
+	position: relative;
+	display: inline-block;
+	background: transparent no-repeat 0 0;
+	margin: 1em 0;
+}
+.image-hover-collection .image-hover figure > img {
+	position: relative;
+	display: block;
+	border: 0;
+	z-index: 1;
+	opacity: 1;
+	transition: opacity 1s ease-in-out;
+}
+.image-hover-collection .image-hover figure:hover:not(:focus) > img,
+.image-hover-collection .image-hover figure:focus:not(:hover) > img,
+.image-hover-collection .image-hover figure.focused > img {
+	opacity: 0;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; /* IE 8 */
+	filter: alpha(opacity=0); /* IE 5-7 */
+}
+.image-hover-collection .image-hover figure > figcaption {
+	display: block;
+	margin-top: 1em;
+}
+-->
+<!-- JS: /*
+$(function() {
+	$('figure.image-hover-trigger').on('touchstart click', function(e) {
+		e.preventDefault();
+		var $t = $(this);
+		if($t.hasClass('focused')) {
+			$t.removeClass('focused');
+		} else {
+			$t.addClass('focused');
+		}
+	});
+}); */
+-->
+<!--IMAGES_FOOTER_END//-->
